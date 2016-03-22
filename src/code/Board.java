@@ -18,13 +18,13 @@ import java.util.Random;
  * @version 1.0
  */
 public class Board {
-	
+
 	public final static int HEIGHT = 7;
 	public final static int WIDTH = 7;
 	public final static int NUMBER_OF_ELBOWS = 15;
 	public final static int NUMBER_OF_TEES = 6;
 	public final static int NUMBER_OF_STRAIGHTS = 13;
-	
+
 	private boolean _staticboard;
 
 
@@ -33,9 +33,9 @@ public class Board {
 	private ArrayList<Tile> _tileset;
 	private HashSet<Tile> _playerLocations;
 	private HashSet<Tile> _tokenLocations;
-	
+
 	private HashSet<Tile> _path;
-	
+
 	/**
 	 * Creates a board of Tiles.  As of now, it has a parameter to set the board to a dynamic state (for playing) and a 
 	 * static state (for testing).
@@ -46,7 +46,7 @@ public class Board {
 		_board = new ArrayList<ArrayList<Tile>>(7);
 		initializeBoard();
 	}
-	
+
 	/**
 	 * Helper method for constructor.  Initializes the underlying ArrayList structure.  (At first to all null values so that using
 	 * the ArrayList's set(index, Element) method works.  Then populates the non-static spaces on the board with Tiles from
@@ -76,7 +76,6 @@ public class Board {
 		initializeStaticTiles();
 		_freetile = _tileset.get(0);
 		_tileset.remove(0);
-		System.out.println(_tileset.size());
 	}
 
 	/**
@@ -183,7 +182,7 @@ public class Board {
 		_path = new HashSet<Tile>();
 		_path.add(t);
 		checkNeighbors(p.x,p.y);
-		System.out.println(_path.size());
+		System.out.println("Path size is: "+_path.size());
 	}
 	/**
 	 * Helper method for findPath.  The logic involved in checking tiles that are adjacent to a given Tile.
@@ -296,9 +295,6 @@ public class Board {
 			}
 		}
 	}
-
-
-
 	/**
 	 * Accessor for size of current path.
 	 * @return an int value corresponding to the size of the current path
@@ -306,5 +302,94 @@ public class Board {
 	public int getPathSize(){
 		return _path.size();
 	}
-	
+	/**
+	 * Accessor for the current "free tile" (the one available to insert)
+	 * @return the free Tile
+	 */
+	public Tile getFreeTile(){
+		return _freetile;
+	}
+
+	public void addPlayer(Player p, int x, int y) {
+		p.setX(x);
+		p.setY(y);
+		Tile t = getTile(x, y);
+		t.setPlayer(p);
+	}
+
+	public boolean movePlayer(Player p, int x, int y) {
+		if(_path.contains(getTile(x,y))){
+			getTile(p.getX(), p.getY()).removePlayer(p);
+			getTile(x,y).setPlayer(p);
+			p.setX(x);
+			p.setY(y);
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Inserts the "free" tile into the designated column at either the top or bottom, and shifts the other values accordingly, 
+	 * generating a new free tile.  Only allows shifts on odd numbered indices.  Returns true if successful, false if unsuccessful.
+	 * 
+	 * @param col int representing the column to shift
+	 * @param top boolean indicating whether the freetile is to be inserted at the "top" of the list 
+	 */
+	public boolean shiftColumn(int col, boolean top){
+		if(col%2==1){
+			if(top==true){
+				Tile t = getTile(col,0);
+				_board.get(col).remove(0);
+				_board.get(col).add(_freetile);
+				_freetile = t;
+			}
+			else{
+				Tile t = getTile(col,6);
+				_board.get(col).remove(6);
+				_board.get(col).add(0, _freetile);
+				_freetile = t;
+			}
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Inserts the "free" tile into the designated row at either the front or back, and shifts the other values accordingly, 
+	 * generating a new free tile.  Only allows shifts on odd numbered indices.  Returns true if successful, false if unsuccessful.
+	 * 
+	 * @param row int representing the row to shift
+	 * @param back a boolean indicating whether the _freetile is inserted at the "back" of the list.
+	 * @return
+	 */
+	public boolean shiftRow(int row, boolean back){
+
+		if(row%2==1){
+			if(back==true){
+				Tile t = getTile(0,row);
+				_board.get(0).set(row, getTile(1,row));
+				_board.get(1).set(row, getTile(2,row));
+				_board.get(2).set(row, getTile(3,row));
+				_board.get(3).set(row, getTile(4,row));
+				_board.get(4).set(row, getTile(1,row));
+				_board.get(5).set(row, getTile(1,row));
+				_board.get(6).set(row, _freetile);
+				_freetile = t;
+			}
+			else{
+				Tile t = getTile(6,row);
+				_board.get(6).set(row, getTile(5,row));
+				_board.get(5).set(row, getTile(4,row));
+				_board.get(4).set(row, getTile(3,row));
+				_board.get(3).set(row, getTile(2,row));
+				_board.get(2).set(row, getTile(1,row));
+				_board.get(1).set(row, getTile(0,row));
+				_board.get(0).set(row, _freetile);
+				_freetile = t;
+			}
+			return true;
+		}
+		return false;
+	}
+	public void rotateFreeTile(){
+		_freetile.rotate();
+	}
 }

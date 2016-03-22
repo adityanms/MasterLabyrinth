@@ -3,13 +3,11 @@ package code;
 import java.awt.Color;
 
 public class Player {
-	Color _color;
-	int _x, _y;
+	private Color _color;
+	private int _x, _y;
 	
-	public Player(Color color, int x, int y){
+	public Player(Color color){
 		_color = color;
-		_x = x;
-		_y = y;
 	}
 	public int getX(){
 		return _x;
@@ -22,5 +20,8 @@ public class Player {
 	}
 	public void setY(int y){
 		_y = y;
+	}
+	public Color getColor(){
+		return _color;
 	}
 }
