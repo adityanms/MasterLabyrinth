@@ -3,7 +3,7 @@ package code;
 import java.awt.Color;
 
 public class Driver {
-	/*
+	/**
 	 * Sample usage and movement tests.  Code demo
 	 * 
 	 * Image of the starting state of the static board used for testing: 
