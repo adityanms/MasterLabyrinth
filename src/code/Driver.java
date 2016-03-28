@@ -12,7 +12,14 @@ public class Driver {
 	 */
 	public static void main(String[] args){
 		Board b = new Board(true);
+		Player p1 = new Player (args[0]);
+		Player p2 = new Player (args[1]);
+		Player p3 = new Player (args[2]);
+		Player p4 = new Player (args[3]);
+		
+		System.out.println("Player names are " + args[0]+ args[1]+ args[2]+ args[3]);
 		Player p = new Player(Color.BLUE);
+		
 		b.addPlayer(p,2,2);//creates a player at 2,2
 		b.findPath(b.getTile(p.getX(), p.getY()));//finds path that includes 2,2
 		b.movePlayer(p,3,2);//should return false and not move player (not in path)

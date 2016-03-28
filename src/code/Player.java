@@ -5,6 +5,7 @@ import java.awt.Color;
 public class Player {
 	private Color _color;
 	private int _x, _y;
+	private String _name;
 	
 	/**
 	 * Constructor
@@ -12,6 +13,10 @@ public class Player {
 	 */
 	public Player(Color color){
 		_color = color;
+	}
+	
+	public Player(String name){
+		_name=name;
 	}
 	
 	/**
