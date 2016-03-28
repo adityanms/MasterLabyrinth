@@ -369,8 +369,8 @@ public class Board {
 				_board.get(1).set(row, getTile(2,row));
 				_board.get(2).set(row, getTile(3,row));
 				_board.get(3).set(row, getTile(4,row));
-				_board.get(4).set(row, getTile(1,row));
-				_board.get(5).set(row, getTile(1,row));
+				_board.get(4).set(row, getTile(5,row));
+				_board.get(5).set(row, getTile(6,row));
 				_board.get(6).set(row, _freetile);
 				_freetile = t;
 			}
