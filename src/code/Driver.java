@@ -1,6 +1,6 @@
 package code;
 
-import java.awt.Color;
+import javax.swing.SwingUtilities;
 
 public class Driver {
 	/**
@@ -10,7 +10,13 @@ public class Driver {
 	 * https://drive.google.com/file/d/0Bxbwk_KH5lhdRHhPa0FkNmtFZ2s/view?usp=sharing
 	 * @param args commandline arguments
 	 */
-	public static void main(String[] args){
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new MasterLabyrinthGUI(new Board(false)));
+	}
+	
+	
+/*	public static void main(String[] args){
 		Board b = new Board(true);
 		Player p1 = new Player (args[0]);
 		Player p2 = new Player (args[1]);
@@ -64,5 +70,5 @@ public class Driver {
 		
 		System.out.println(b.shiftColumn(0, true));//prints false, can't shift even indices, board does not change
 		System.out.println(b.shiftRow(0, true));//prints false, can't shift even indices, board does not change
-	}
+	}*/
 }
