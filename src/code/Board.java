@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
+
+import code.Observer;
 /**
  * A board for use in the game of MasterLabyrinth.  Essentially a collection of Tile objects.
  * It keeps track of the 49 tiles (a 7x7 grid) on the game board itself, plus the one "free" tile that is available for tile moves.
@@ -19,7 +21,7 @@ import java.util.Random;
  * @author team112
  * @version 1.0
  */
-public class Board extends Observable{
+public class Board{
 
 	public final static int HEIGHT = 7;
 	public final static int WIDTH = 7;
@@ -28,6 +30,8 @@ public class Board extends Observable{
 	public final static int NUMBER_OF_STRAIGHTS = 13;
 
 	private boolean _staticboard;
+	
+	private Observer _observer;	// who to notify when the model changes
 
 
 	private ArrayList<ArrayList<Tile>> _board;
@@ -44,6 +48,7 @@ public class Board extends Observable{
 	 * @param fixed boolean representing the fixed or non-fixed state of the board upon creation
 	 */
 	public Board(boolean fixed){
+		_observer = null;
 		_staticboard=fixed;
 		_board = new ArrayList<ArrayList<Tile>>(7);
 		initializeBoard();
@@ -78,6 +83,16 @@ public class Board extends Observable{
 		initializeStaticTiles();
 		_freetile = _tileset.get(0);
 		_tileset.remove(0);
+	}
+	
+	public void setObserver(Observer obs) {
+		_observer = obs;
+	}
+
+	public void gameStateChanged() {
+		if (_observer != null) {
+			_observer.update();
+		}
 	}
 
 	/**
@@ -393,5 +408,6 @@ public class Board extends Observable{
 	}
 	public void rotateFreeTile(){
 		_freetile.rotate();
+		gameStateChanged();
 	}
 }

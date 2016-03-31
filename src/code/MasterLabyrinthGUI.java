@@ -4,16 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;import java.awt.event.ComponentEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.Observable;
-import java.util.Observer;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import code.Observer;
+
 /**
  * Graphical User Interface for our Master Labyrinth board.
  * As of now, shows a visual representation of the tiles on the board.
@@ -35,23 +38,26 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
  */
 	public MasterLabyrinthGUI(Board b){
 		_board = b;
-		_board.addObserver(this);
-		_freeTile=_board.getFreeTile();
-		_freeTile.addObserver(this);
-		_dataPanel = new JPanel();
-		_freeTilePanel = new JPanel();
+		_board.setObserver(this);
 	}
 	@Override public void run(){
 		_window = new JFrame("Master Labyrinth");
 		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		_freeTile = _board.getFreeTile();
+		_dataPanel = new JPanel();
+		_freeTilePanel = new JPanel();
+		
 		initializeBoard();
 		initializeData();
+		update();
 		_window.setLayout(new GridLayout(1, 2));
 		_window.add(_boardPanel);
 		_window.add(_dataPanel);
 		_window.pack();
 		_window.setVisible(true);
+		
+		
 	}
 
 
@@ -94,7 +100,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 				_boardPanel.add(p);
 			}			
 		}
-		update(_board, 0);
+		//update();
 	}
 	
 	
@@ -106,7 +112,7 @@ public void initializeData(){
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			_freeTile.rotate();
+			_board.rotateFreeTile();
 			
 		}
 	});
@@ -149,9 +155,10 @@ public void initializeData(){
 	
 }
 
-public void redrawTile(JPanel tile){
-	tile = new JPanel();
-	
+private void redrawTile(){
+	JPanel tile = _freeTilePanel;
+	_freeTile = _board.getFreeTile();
+	/*
 	tile.setLayout(new GridLayout(3, 3));
 	for(int i=0;i<3;i++){//3x3 grid on face of tile
 		for(int j=0;j<3;j++){
@@ -162,7 +169,7 @@ public void redrawTile(JPanel tile){
 			tile.add(pan);
 		}
 	}
-	
+	*/
 	//setting center sub-panel to black (component 4 is center sub-panel)
 	JPanel pan = (JPanel)tile.getComponent(4);
 	pan.setBackground(Color.BLACK);
@@ -194,14 +201,8 @@ public void redrawTile(JPanel tile){
 
 }
 	
-	/**
-	 * The update method is required for all Observers in the Observer Pattern
-	 * Please don't modify the method header since Observer is an Interface with the exact same method
-	 * This method is called when something in the data model changes.
-	 *
-	 */
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update() {
 		for(int c=0; c<Board.WIDTH;c++){
 			for(int r=0; r<Board.HEIGHT;r++){
 				JPanel p = (JPanel)_boardPanel.getComponent(r*Board.WIDTH+c);
@@ -235,11 +236,11 @@ public void redrawTile(JPanel tile){
 				if(t.getWest()==true){pan.setBackground(Color.BLACK);}
 				else{pan.setBackground(Color.WHITE);}
 				
-				redrawTile(_freeTilePanel);
+				
 				
 			}
 		}
-		
+		redrawTile();
 	}
 
 
