@@ -195,7 +195,9 @@ public void redrawTile(JPanel tile){
 }
 	
 	/**
-	 * Pulls data from Board and populates JPanels with said data.
+	 * The update method is required for all Observers in the Observer Pattern
+	 * Please don't modify the method header since Observer is an Interface with the exact same method
+	 * This method is called when something in the data model changes.
 	 *
 	 */
 	@Override

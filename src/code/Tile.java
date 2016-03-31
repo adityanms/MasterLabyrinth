@@ -87,9 +87,9 @@ public class Tile extends Observable {
 		_south = _east;
 		_east = temp;
 		
-		System.out.println("Rotated");
+		System.out.println("Rotated");//Testing to see if this works
 		setChanged();
-		notifyObservers();
+		notifyObservers(); //calls the update method in the observer class aka MasterLabyrinthGUI
 	}
 
 	/** Accessor for whether or not this tile has a token on it.
