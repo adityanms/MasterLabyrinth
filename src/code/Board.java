@@ -42,7 +42,7 @@ public class Board{
 	private boolean _lastShiftType;
 	private int _lastShiftPos;
 	private boolean _lastShiftDirection;
-
+	private ArrayList<Player> _player;
 	private HashSet<Tile> _path;
 
 	/**
@@ -55,6 +55,29 @@ public class Board{
 		_staticboard=fixed;
 		_board = new ArrayList<ArrayList<Tile>>(7);
 		initializeBoard();
+	}
+
+	public Board(boolean fixed, String[] names) {
+		_observer = null;
+		_staticboard=fixed;
+		_board = new ArrayList<ArrayList<Tile>>(7);
+		initializeBoard();
+		initializePlayers(names);
+	}
+
+	private void initializePlayers(String[] names) {
+		_player = new ArrayList<>();
+		for(int i=0;i<names.length;i++){
+			_player.add(new Player(names[i]));
+		}	
+	}
+	
+	public Player getPlayer(int i){
+		return _player.get(i);
+	}
+	
+	public int numberOfPlayers(){
+		return _player.size();
 	}
 
 	/**

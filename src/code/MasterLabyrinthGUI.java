@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 import java.util.Observable;
 
 
@@ -31,6 +32,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 	private Board _board;
 	private Tile _freeTile;
 	private JPanel _freeTilePanel;
+	private ArrayList<JButton> _playerButtons;
 	/**
 	 * Constructor.
 	 * 
@@ -169,7 +171,12 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		pan = (JPanel)_freeTilePanel.getComponent(3);
 		if(_freeTile.getWest()==true){pan.setBackground(Color.BLACK);}
 		else{pan.setBackground(Color.WHITE);}
-
+		
+		_playerButtons = new ArrayList<>();
+		for(int i=0;i<_board.numberOfPlayers();i++){
+			_playerButtons.add(new JButton(_board.getPlayer(i).getPlayerName()));
+			_dataPanel.add(_playerButtons.get(i));
+		}
 
 	}
 

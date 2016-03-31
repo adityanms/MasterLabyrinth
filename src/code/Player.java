@@ -19,6 +19,14 @@ public class Player {
 		_name=name;
 	}
 	
+	public Player getPlayer(String name){
+		return this;
+	}
+	
+	public String getPlayerName(){
+		return _name;
+	}
+	
 	/**
 	 * Returns the x coordinate of the player
 	 * @return

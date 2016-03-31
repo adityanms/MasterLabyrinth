@@ -12,7 +12,7 @@ public class Driver {
 	 */
 	
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new MasterLabyrinthGUI(new Board(false)));
+		SwingUtilities.invokeLater(new MasterLabyrinthGUI(new Board(false, args)));
 	}
 	
 	
