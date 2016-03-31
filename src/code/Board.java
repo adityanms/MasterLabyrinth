@@ -356,7 +356,7 @@ public class Board{
 	 */
 	public boolean shiftColumn(int col, boolean top){
 		if(col%2==1){
-			if(top != _lastShiftDirection && col==_lastShiftPos && _lastShiftType==true){
+			if(top!=_lastShiftDirection && col==_lastShiftPos && _lastShiftType==true){
 				if(top==true){
 					Tile t = getTile(col,0);
 					_board.get(col).remove(0);
@@ -388,29 +388,34 @@ public class Board{
 	public boolean shiftRow(int row, boolean back){
 
 		if(row%2==1){
-			if(back==true){
-				Tile t = getTile(0,row);
-				_board.get(0).set(row, getTile(1,row));
-				_board.get(1).set(row, getTile(2,row));
-				_board.get(2).set(row, getTile(3,row));
-				_board.get(3).set(row, getTile(4,row));
-				_board.get(4).set(row, getTile(5,row));
-				_board.get(5).set(row, getTile(6,row));
-				_board.get(6).set(row, _freetile);
-				_freetile = t;
+			if(back!=_lastShiftDirection && row==_lastShiftPos && _lastShiftType==false){
+				if(back==true){
+					Tile t = getTile(0,row);
+					_board.get(0).set(row, getTile(1,row));
+					_board.get(1).set(row, getTile(2,row));
+					_board.get(2).set(row, getTile(3,row));
+					_board.get(3).set(row, getTile(4,row));
+					_board.get(4).set(row, getTile(5,row));
+					_board.get(5).set(row, getTile(6,row));
+					_board.get(6).set(row, _freetile);
+					_freetile = t;
+				}
+				else{
+					Tile t = getTile(6,row);
+					_board.get(6).set(row, getTile(5,row));
+					_board.get(5).set(row, getTile(4,row));
+					_board.get(4).set(row, getTile(3,row));
+					_board.get(3).set(row, getTile(2,row));
+					_board.get(2).set(row, getTile(1,row));
+					_board.get(1).set(row, getTile(0,row));
+					_board.get(0).set(row, _freetile);
+					_freetile = t;
+				}
+				_lastShiftType = false;
+				_lastShiftDirection = back;
+				_lastShiftPos = row;
+				return true;
 			}
-			else{
-				Tile t = getTile(6,row);
-				_board.get(6).set(row, getTile(5,row));
-				_board.get(5).set(row, getTile(4,row));
-				_board.get(4).set(row, getTile(3,row));
-				_board.get(3).set(row, getTile(2,row));
-				_board.get(2).set(row, getTile(1,row));
-				_board.get(1).set(row, getTile(0,row));
-				_board.get(0).set(row, _freetile);
-				_freetile = t;
-			}
-			return true;
 		}
 		return false;
 	}
