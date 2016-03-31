@@ -39,6 +39,9 @@ public class Board{
 	private ArrayList<Tile> _tileset;
 	private HashSet<Tile> _playerLocations;
 	private HashSet<Tile> _tokenLocations;
+	private boolean _lastShiftType;
+	private int _lastShiftPos;
+	private boolean _lastShiftDirection;
 
 	private HashSet<Tile> _path;
 
@@ -353,19 +356,24 @@ public class Board{
 	 */
 	public boolean shiftColumn(int col, boolean top){
 		if(col%2==1){
-			if(top==true){
-				Tile t = getTile(col,0);
-				_board.get(col).remove(0);
-				_board.get(col).add(_freetile);
-				_freetile = t;
+			if(top != _lastShiftDirection && col==_lastShiftPos && _lastShiftType==true){
+				if(top==true){
+					Tile t = getTile(col,0);
+					_board.get(col).remove(0);
+					_board.get(col).add(_freetile);
+					_freetile = t;
+				}
+				else{
+					Tile t = getTile(col,6);
+					_board.get(col).remove(6);
+					_board.get(col).add(0, _freetile);
+					_freetile = t;
+				}
+				_lastShiftType = true;
+				_lastShiftDirection = top;
+				_lastShiftPos = col;
+				return true;
 			}
-			else{
-				Tile t = getTile(col,6);
-				_board.get(col).remove(6);
-				_board.get(col).add(0, _freetile);
-				_freetile = t;
-			}
-			return true;
 		}
 		return false;
 	}
