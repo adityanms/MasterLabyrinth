@@ -31,11 +31,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 	private Board _board;
 	private Tile _freeTile;
 	private JPanel _freeTilePanel;
-/**
- * Constructor.
- * 
- * @param b MasterLabyrinth Board obj
- */
+	/**
+	 * Constructor.
+	 * 
+	 * @param b MasterLabyrinth Board obj
+	 */
 	public MasterLabyrinthGUI(Board b){
 		_board = b;
 		_board.setObserver(this);
@@ -47,7 +47,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		_freeTile = _board.getFreeTile();
 		_dataPanel = new JPanel();
 		_freeTilePanel = new JPanel();
-		
+
 		initializeBoard();
 		initializeData();
 		update();
@@ -56,14 +56,14 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		_window.add(_dataPanel);
 		_window.pack();
 		_window.setVisible(true);
-		
-		
+
+
 	}
 
 
-/**
- * Sets up a 7x7 grid of JPanels which will hold visual representations of Tiles.
- * Each JPanel is a 3x3 grid which will hold visual representation of a Tile's NEWS values.
+	/**
+	 * Sets up a 7x7 grid of JPanels which will hold visual representations of Tiles.
+	 * Each JPanel is a 3x3 grid which will hold visual representation of a Tile's NEWS values.
 	 * These sub-panels are labeled 0-8 as shown:
 	 * 0 1 2
 	 * 3 4 5
@@ -71,7 +71,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 	 * where sub-panel 1 should represent the Tile's North value,
 	 * 5 represents the Tile's East value, etc...
 	 * sub-panel 4 will always be black
- */
+	 */
 	private void initializeBoard() {
 		_boardPanel = new JPanel();
 		_boardPanel.setLayout(new GridLayout(Board.WIDTH,Board.HEIGHT));
@@ -102,123 +102,129 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		}
 		//update();
 	}
-	
-	
-public void initializeData(){
-	
-	JButton rotateTile = new JButton("Rotate tile");
-	_dataPanel.add(rotateTile);
-	rotateTile.addActionListener(new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			_board.rotateFreeTile();
+
+
+	public void initializeData(){
+
+		JButton rotateTile = new JButton("Rotate tile");
+		_dataPanel.add(rotateTile);
+		rotateTile.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_board.rotateFreeTile();
+
+			}
+		});
+		JButton shift = new JButton("Shift Down");
+		_dataPanel.add(shift);
+		shift.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				_board.shiftColumn(1, true);
+			}
 			
+		});
+		
+		JButton shift2 = new JButton("Shift Up");
+		_dataPanel.add(shift2);
+		shift2.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				_board.shiftColumn(1, false);
+			}
+			
+		});
+
+		_dataPanel.add(_freeTilePanel);
+
+		_freeTilePanel.setLayout(new GridLayout(3, 3));
+		for(int i=0;i<3;i++){//3x3 grid on face of tile
+			for(int j=0;j<3;j++){
+				JPanel pan = new JPanel();
+				pan.setOpaque(true);
+				pan.setPreferredSize(new Dimension(20,20));
+				pan.setBackground(Color.WHITE);
+				
+				_freeTilePanel.add(pan);
+			}
 		}
-	});
-	
-	
-	_dataPanel.add(_freeTilePanel);
-	
-	_freeTilePanel.setLayout(new GridLayout(3, 3));
-	for(int i=0;i<3;i++){//3x3 grid on face of tile
-		for(int j=0;j<3;j++){
-			JPanel pan = new JPanel();
-			pan.setOpaque(true);
-			pan.setPreferredSize(new Dimension(20,20));
-			pan.setBackground(Color.WHITE);
-			_freeTilePanel.add(pan);
-		}
+
+		//setting center sub-panel to black (component 4 is center sub-panel)
+		JPanel pan = (JPanel)_freeTilePanel.getComponent(4);
+		pan.setBackground(Color.BLACK);
+
+		//setting north color based on tile's getNorth() value
+		pan = (JPanel)_freeTilePanel.getComponent(1);//see javadoc for why these are 1,5,7,3
+		if(_freeTile.getNorth()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting east color based on tile's getEast() value
+		pan = (JPanel)_freeTilePanel.getComponent(5);
+		if(_freeTile.getEast()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting south color based on tile's getSouth() value
+		pan = (JPanel)_freeTilePanel.getComponent(7);
+		if(_freeTile.getSouth()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting west color based on tile's getWest() value
+		pan = (JPanel)_freeTilePanel.getComponent(3);
+		if(_freeTile.getWest()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+
+
 	}
-	
-	//setting center sub-panel to black (component 4 is center sub-panel)
-	JPanel pan = (JPanel)_freeTilePanel.getComponent(4);
-	pan.setBackground(Color.BLACK);
 
-	//setting north color based on tile's getNorth() value
-	pan = (JPanel)_freeTilePanel.getComponent(1);//see javadoc for why these are 1,5,7,3
-	if(_freeTile.getNorth()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting east color based on tile's getEast() value
-	pan = (JPanel)_freeTilePanel.getComponent(5);
-	if(_freeTile.getEast()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting south color based on tile's getSouth() value
-	pan = (JPanel)_freeTilePanel.getComponent(7);
-	if(_freeTile.getSouth()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting west color based on tile's getWest() value
-	pan = (JPanel)_freeTilePanel.getComponent(3);
-	if(_freeTile.getWest()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
+	private void redrawTile(){
+		JPanel tile = _freeTilePanel;
+		_freeTile = _board.getFreeTile();
+		 
+		//setting center sub-panel to black (component 4 is center sub-panel)
+		JPanel pan = (JPanel)tile.getComponent(4);
+		pan.setBackground(Color.BLACK);
 
-	
-}
+		//setting north color based on tile's getNorth() value
+		pan = (JPanel)tile.getComponent(1);//see javadoc for why these are 1,5,7,3
+		if(_freeTile.getNorth()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting east color based on tile's getEast() value
+		pan = (JPanel)tile.getComponent(5);
+		if(_freeTile.getEast()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting south color based on tile's getSouth() value
+		pan = (JPanel)tile.getComponent(7);
+		if(_freeTile.getSouth()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
+		//setting west color based on tile's getWest() value
+		pan = (JPanel)tile.getComponent(3);
+		if(_freeTile.getWest()==true){pan.setBackground(Color.BLACK);}
+		else{pan.setBackground(Color.WHITE);}
 
-private void redrawTile(){
-	JPanel tile = _freeTilePanel;
-	_freeTile = _board.getFreeTile();
-	/*
-	tile.setLayout(new GridLayout(3, 3));
-	for(int i=0;i<3;i++){//3x3 grid on face of tile
-		for(int j=0;j<3;j++){
-			JPanel pan = new JPanel();
-			pan.setOpaque(true);
-			pan.setPreferredSize(new Dimension(20,20));
-			pan.setBackground(Color.WHITE);
-			tile.add(pan);
-		}
+		System.out.println("East "+ _freeTile.getEast());
+		System.out.println("West "+_freeTile.getWest());
+		System.out.println("North "+_freeTile.getNorth());
+		System.out.println("South "+_freeTile.getSouth());
+		_freeTilePanel.repaint();
+		_dataPanel.repaint();
+		_window.repaint();
+
 	}
-	*/
-	//setting center sub-panel to black (component 4 is center sub-panel)
-	JPanel pan = (JPanel)tile.getComponent(4);
-	pan.setBackground(Color.BLACK);
 
-	//setting north color based on tile's getNorth() value
-	pan = (JPanel)tile.getComponent(1);//see javadoc for why these are 1,5,7,3
-	if(_freeTile.getNorth()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting east color based on tile's getEast() value
-	pan = (JPanel)tile.getComponent(5);
-	if(_freeTile.getEast()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting south color based on tile's getSouth() value
-	pan = (JPanel)tile.getComponent(7);
-	if(_freeTile.getSouth()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	//setting west color based on tile's getWest() value
-	pan = (JPanel)tile.getComponent(3);
-	if(_freeTile.getWest()==true){pan.setBackground(Color.BLACK);}
-	else{pan.setBackground(Color.WHITE);}
-	
-	System.out.println("East "+ _freeTile.getEast());
-	System.out.println("West "+_freeTile.getWest());
-	System.out.println("North "+_freeTile.getNorth());
-	System.out.println("South "+_freeTile.getSouth());
-	_freeTilePanel.repaint();
-	_dataPanel.repaint();
-	_window.repaint();
-
-}
-	
 	@Override
 	public void update() {
 		for(int c=0; c<Board.WIDTH;c++){
 			for(int r=0; r<Board.HEIGHT;r++){
 				JPanel p = (JPanel)_boardPanel.getComponent(r*Board.WIDTH+c);
-			
-				/*  Tile labels
+
+				
 				JLabel pos = new JLabel(""+c+","+(6-r));
 				pos.setForeground(Color.WHITE);
-				pan.add(pos);
-				*/
 				
+
 				Tile t = _board.getTile(c, 6-r);//6-r because our 0,0 is at bottom left instead of top-left
-				
+
 				//setting center sub-panel to black (component 4 is center sub-panel)
 				JPanel pan = (JPanel)p.getComponent(4);
 				pan.setBackground(Color.BLACK);
-
+				pan.add(pos);
 				//setting north color based on tile's getNorth() value
 				pan = (JPanel)p.getComponent(1);//see javadoc for why these are 1,5,7,3
 				if(t.getNorth()==true){pan.setBackground(Color.BLACK);}
@@ -235,9 +241,9 @@ private void redrawTile(){
 				pan = (JPanel)p.getComponent(3);
 				if(t.getWest()==true){pan.setBackground(Color.BLACK);}
 				else{pan.setBackground(Color.WHITE);}
-				
-				
-				
+
+
+
 			}
 		}
 		redrawTile();

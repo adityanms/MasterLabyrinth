@@ -372,6 +372,7 @@ public class Board{
 				_lastShiftType = true;
 				_lastShiftDirection = top;
 				_lastShiftPos = col;
+				gameStateChanged();
 				return true;
 			}
 		}
@@ -414,6 +415,7 @@ public class Board{
 				_lastShiftType = false;
 				_lastShiftDirection = back;
 				_lastShiftPos = row;
+				gameStateChanged();
 				return true;
 			}
 		}

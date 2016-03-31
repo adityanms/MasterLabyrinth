@@ -152,7 +152,7 @@ public class ProjectTests {
 		assertTrue("",actual==expected);
 	}
 	@Test public void shiftTest03(){
-		Board b = new Board(false);
+		Board b = new Board(true);
 		Tile oldfree = b.getFreeTile();
 		Tile oldback = b.getTile(0, 5);
 		b.shiftRow(5, true);
@@ -160,6 +160,27 @@ public class ProjectTests {
 		boolean expected = true;
 		boolean actual = oldfree==b.getTile(6, 5);
 		actual = actual&&(newfree==oldback);
+		assertTrue("",actual==expected);
+	}
+	@Test public void shiftTestforInvalidShifts01(){
+		Board b = new Board(true);
+		b.shiftColumn(1, true);
+		boolean actual = b.shiftColumn(1, false);//should return false
+		boolean expected = false;
+		assertTrue("",actual==expected);
+	}
+	@Test public void shiftTestforInvalidShifts02(){
+		Board b = new Board(true);
+		b.shiftColumn(1, true);
+		boolean actual = b.shiftColumn(1, true);//should return true
+		boolean expected = true;
+		assertTrue("",actual==expected);
+	}
+	@Test public void shiftTestforInvalidShifts03(){
+		Board b = new Board(true);
+		b.shiftColumn(1, true);
+		boolean actual = b.shiftColumn(3, false);//should return true
+		boolean expected = true;
 		assertTrue("",actual==expected);
 	}
 }
