@@ -22,7 +22,7 @@ import java.util.Observable;
  * @author team112
  * @version 1.0
  */
-public class Tile extends Observable {
+public class Tile {
 	private boolean _north,_east,_south,_west;
 	private boolean _hasToken = false;
 	private Token _token = null; //only one token can be on each tile
@@ -88,8 +88,7 @@ public class Tile extends Observable {
 		_east = temp;
 		
 		System.out.println("Rotated");//Testing to see if this works
-		setChanged();
-		notifyObservers(); //calls the update method in the observer class aka MasterLabyrinthGUI
+		
 	}
 
 	/** Accessor for whether or not this tile has a token on it.
