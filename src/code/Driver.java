@@ -8,7 +8,7 @@ public class Driver {
 	 * 
 	 * Image of the starting state of the static board used for testing: 
 	 * https://drive.google.com/file/d/0Bxbwk_KH5lhdRHhPa0FkNmtFZ2s/view?usp=sharing
-	 * @param args commandline arguments
+	 * @param args commandline arguments containing player names
 	 */
 	
 	public static void main(String[] args) {

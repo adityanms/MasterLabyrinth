@@ -57,6 +57,12 @@ public class Board{
 		initializeBoard();
 	}
 
+	/**
+	 * Creates a board of Tiles. It has a parameter to set the board to a dynamic state (for playing) and a 
+	 * static state (for testing), and a parameter that takes commandline arguments
+	 * @param fixed Boolean parameter to set if the board is static/dynamic.
+	 * @param names Commandline arguments containing the player names
+	 */
 	public Board(boolean fixed, String[] names) {
 		_observer = null;
 		_staticboard=fixed;
@@ -64,6 +70,11 @@ public class Board{
 		initializeBoard();
 		initializePlayers(names);
 	}
+	
+	/**
+	 * Method to initialize players with the names given in commandline arguments
+	 * @param names Space separated names of players
+	 */
 
 	private void initializePlayers(String[] names) {
 		_player = new ArrayList<>();
@@ -72,10 +83,19 @@ public class Board{
 		}	
 	}
 	
+	/**
+	 * Returns a player from the Arraylist of Players
+	 * @param i the index of the player being accessed from the arraylist.
+	 * @return Returns the corresponding player
+	 */
 	public Player getPlayer(int i){
 		return _player.get(i);
 	}
 	
+	/**
+	 * Returns the number of players on the board
+	 * @return Number of players
+	 */
 	public int numberOfPlayers(){
 		return _player.size();
 	}
@@ -376,6 +396,7 @@ public class Board{
 	 * 
 	 * @param col int representing the column to shift
 	 * @param top boolean indicating whether the freetile is to be inserted at the "top" of the list 
+	 * @return returns a boolean if column was shifted or not
 	 */
 	public boolean shiftColumn(int col, boolean top){
 		if(col%2==1){
@@ -407,7 +428,7 @@ public class Board{
 	 * 
 	 * @param row int representing the row to shift
 	 * @param back a boolean indicating whether the _freetile is inserted at the "back" of the list.
-	 * @return
+	 * @return returns a boolean if row was shifted or not
 	 */
 	public boolean shiftRow(int row, boolean back){
 

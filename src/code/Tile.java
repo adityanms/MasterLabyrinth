@@ -110,7 +110,7 @@ public class Tile {
 	
 	/**
 	 * Returns the token on a tile
-	 * @return
+	 * @return returns the token on the tile
 	 */
 	public Token getToken() {
 		return _token;

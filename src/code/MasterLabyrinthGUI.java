@@ -42,6 +42,9 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		_board = b;
 		_board.setObserver(this);
 	}
+	/**
+	 * Function required as MasterLabyrinthGUI implements Runnable
+	 */
 	@Override public void run(){
 		_window = new JFrame("Master Labyrinth");
 		_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,10 +105,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 				_boardPanel.add(p);
 			}			
 		}
-		//update();
 	}
 
-
+	/**
+	 * Method to initilialize the data panel
+	 */
 	public void initializeData(){
 
 		JButton rotateTile = new JButton("Rotate tile");
@@ -214,6 +218,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer{
 		_window.repaint();
 
 	}
+	
+	/**
+	 * The Update method is required as this implements the Observer interface
+	 */
 
 	@Override
 	public void update() {

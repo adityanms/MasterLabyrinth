@@ -15,21 +15,34 @@ public class Player {
 		_color = color;
 	}
 	
+	/**
+	 * Constructor which takes player name
+	 * @param name name of the player
+	 */
 	public Player(String name){
 		_name=name;
 	}
 	
+	/**
+	 * Method to return a player with a specific name
+	 * @param name name of the player wanted
+	 * @return returns the player
+	 */
 	public Player getPlayer(String name){
 		return this;
 	}
 	
+	/**
+	 * Method to return the name of the player
+	 * @return name of the player
+	 */
 	public String getPlayerName(){
 		return _name;
 	}
 	
 	/**
 	 * Returns the x coordinate of the player
-	 * @return
+	 * @return x coordinate
 	 */
 	public int getX(){
 		return _x;
@@ -37,7 +50,7 @@ public class Player {
 	
 	/**
 	 * Returns the y coordinate of the player
-	 * @return
+	 * @return y coordinate
 	 */
 	public int getY(){
 		return _y;
@@ -45,7 +58,7 @@ public class Player {
 	
 	/** 
 	 * Sets the x coordinate of the player
-	 * @param x
+	 * @param x x coordinate
 	 */
 	public void setX(int x){
 		_x = x;
@@ -53,7 +66,7 @@ public class Player {
 	
 	/** 
 	 * Sets the y coordinate of the player
-	 * @param y
+	 * @param y y coordinate
 	 */
 	public void setY(int y){
 		_y = y;
@@ -61,7 +74,7 @@ public class Player {
 	
 	/**
 	 * Gets the color of the player
-	 * @return
+	 * @return color of the player
 	 */
 	public Color getColor(){
 		return _color;
