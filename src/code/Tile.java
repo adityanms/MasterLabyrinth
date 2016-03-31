@@ -1,6 +1,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Defines a tile to be used in a game of Master Labyrinth.  A tile has the ability to be rotated and has
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * @author team112
  * @version 1.0
  */
-public class Tile {
+public class Tile extends Observable {
 	private boolean _north,_east,_south,_west;
 	private boolean _hasToken = false;
 	private Token _token = null; //only one token can be on each tile
@@ -85,6 +86,10 @@ public class Tile {
 		_west = _south;
 		_south = _east;
 		_east = temp;
+		
+		System.out.println("Rotated");
+		setChanged();
+		notifyObservers();
 	}
 
 	/** Accessor for whether or not this tile has a token on it.

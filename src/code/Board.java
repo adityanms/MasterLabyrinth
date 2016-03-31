@@ -1,11 +1,13 @@
 package code;
 
 import java.awt.Color;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Random;
 /**
  * A board for use in the game of MasterLabyrinth.  Essentially a collection of Tile objects.
@@ -17,7 +19,7 @@ import java.util.Random;
  * @author team112
  * @version 1.0
  */
-public class Board {
+public class Board extends Observable{
 
 	public final static int HEIGHT = 7;
 	public final static int WIDTH = 7;
