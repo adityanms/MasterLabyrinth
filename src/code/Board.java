@@ -419,15 +419,15 @@ public class Board{
 				if(_freetile.hasToken()){
 					if(top){
 						Tile t = getTile(col,6);
-						Token tok = t.getToken();
+						Token tok = _freetile.getToken();
 						t.setToken(tok);
-						t.removeToken();
+						_freetile.removeToken();
 					}
 					else{
 						Tile t = getTile(col,0);
-						Token tok = t.getToken();
+						Token tok = _freetile.getToken();
 						t.setToken(tok);
-						t.removeToken();
+						_freetile.removeToken();
 					}
 				}
 				
@@ -480,22 +480,22 @@ public class Board{
 				if(_freetile.hasToken()){
 					if(back){
 						Tile t = getTile(row,6);
-						Token tok = t.getToken();
+						Token tok = _freetile.getToken();
 						t.setToken(tok);
-						t.removeToken();
+						_freetile.removeToken();
 					}
 					else{
 						Tile t = getTile(row,0);
-						Token tok = t.getToken();
+						Token tok = _freetile.getToken();
 						t.setToken(tok);
-						t.removeToken();
+						_freetile.removeToken();
 					}
 				}
 				
 				_lastShiftType = false;
 				_lastShiftDirection = back;
 				_lastShiftPos = row;
-				gameStateChanged();
+				gameStateChanged();	
 				return true;
 			}
 		}
