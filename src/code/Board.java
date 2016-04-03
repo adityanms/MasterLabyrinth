@@ -43,8 +43,9 @@ public class Board{
 	private int _lastShiftPos;
 	private boolean _lastShiftDirection;
 	private ArrayList<Player> _player;
-	private HashSet<Tile> _path;
-
+	private HashSet<Tile> _path;	
+	private int _currentToken = 1;	//Token number that the players are trying to find
+	
 	/**
 	 * Creates a board of Tiles.  As of now, it has a parameter to set the board to a dynamic state (for playing) and a 
 	 * static state (for testing).
@@ -69,6 +70,7 @@ public class Board{
 		_board = new ArrayList<ArrayList<Tile>>(7);
 		initializeBoard();
 		initializePlayers(names);
+		initializeTokens();
 	}
 	
 	/**
@@ -79,7 +81,7 @@ public class Board{
 	private void initializePlayers(String[] names) {
 		_player = new ArrayList<>();
 		for(int i=0;i<names.length;i++){
-			_player.add(new Player(names[i]));
+			_player.add(new Player(names[i]));			
 		}	
 	}
 	
@@ -130,7 +132,6 @@ public class Board{
 		_freetile = _tileset.get(0);
 		_tileset.remove(0);
 		
-		initializeTokens();
 	}
 	
 	public void setObserver(Observer obs) {
@@ -388,6 +389,25 @@ public class Board{
 			getTile(x,y).setPlayer(p);
 			p.setX(x);
 			p.setY(y);
+
+			if(getTile(x,y).hasToken()){
+				if(getTile(x,y).getToken().isFacedDown()){
+					getTile(x,y).getToken().turnToken();
+				}
+				
+				if(getTile(x,y).getToken().getTokenNumber()==_currentToken){
+					p.addTokenSet(getTile(x,y).getToken());
+					getTile(x,y).removeToken();
+					if(_currentToken==20){
+						_currentToken = _currentToken + 5;
+					}
+					else{
+						_currentToken++;
+					}
+				}
+
+			}
+
 			return true;
 		}
 		return false;

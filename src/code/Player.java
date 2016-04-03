@@ -1,11 +1,13 @@
 package code;
 
 import java.awt.Color;
+import java.util.HashSet;
 
 public class Player {
 	private Color _color;
 	private int _x, _y;
 	private String _name;
+	private HashSet<Token> _playerTokens;	//Tokens that the player has obtained
 	
 	/**
 	 * Constructor
@@ -20,7 +22,8 @@ public class Player {
 	 * @param name name of the player
 	 */
 	public Player(String name){
-		_name=name;
+		_name=name;		
+		_playerTokens = new HashSet<Token>();
 	}
 	
 	/**
@@ -78,5 +81,13 @@ public class Player {
 	 */
 	public Color getColor(){
 		return _color;
+	}
+	
+	public void addTokenSet(Token t){
+		_playerTokens.add(t);
+	}
+	
+	public HashSet<Token> getTokenSet(){
+		return _playerTokens;
 	}
 }

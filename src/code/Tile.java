@@ -168,4 +168,8 @@ public class Tile {
 	public void removePlayer(Player p){
 		_players.remove(p);
 	}
+	
+	public Player getPlayer(int i){
+		return _players.get(i);
+	}
 }
