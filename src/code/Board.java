@@ -129,6 +129,8 @@ public class Board{
 		initializeStaticTiles();
 		_freetile = _tileset.get(0);
 		_tileset.remove(0);
+		
+		initializeTokens();
 	}
 	
 	public void setObserver(Observer obs) {
@@ -413,6 +415,22 @@ public class Board{
 					_board.get(col).add(0, _freetile);
 					_freetile = t;
 				}
+				
+				if(_freetile.hasToken()){
+					if(top){
+						Tile t = getTile(col,6);
+						Token tok = t.getToken();
+						t.setToken(tok);
+						t.removeToken();
+					}
+					else{
+						Tile t = getTile(col,0);
+						Token tok = t.getToken();
+						t.setToken(tok);
+						t.removeToken();
+					}
+				}
+				
 				_lastShiftType = true;
 				_lastShiftDirection = top;
 				_lastShiftPos = col;
@@ -425,6 +443,8 @@ public class Board{
 	/**
 	 * Inserts the "free" tile into the designated row at either the front or back, and shifts the other values accordingly, 
 	 * generating a new free tile.  Only allows shifts on odd numbered indices.  Returns true if successful, false if unsuccessful.
+	 * 
+	 * If the tile that becomes the new free tile contains a token then the token is moved to the opposite end of the board of which is was pushed off from.
 	 * 
 	 * @param row int representing the row to shift
 	 * @param back a boolean indicating whether the _freetile is inserted at the "back" of the list.
@@ -456,6 +476,22 @@ public class Board{
 					_board.get(0).set(row, _freetile);
 					_freetile = t;
 				}
+				
+				if(_freetile.hasToken()){
+					if(back){
+						Tile t = getTile(row,6);
+						Token tok = t.getToken();
+						t.setToken(tok);
+						t.removeToken();
+					}
+					else{
+						Tile t = getTile(row,0);
+						Token tok = t.getToken();
+						t.setToken(tok);
+						t.removeToken();
+					}
+				}
+				
 				_lastShiftType = false;
 				_lastShiftDirection = back;
 				_lastShiftPos = row;
@@ -469,4 +505,50 @@ public class Board{
 		_freetile.rotate();
 		gameStateChanged();
 	}
+
+	/**
+	 * Helper method for initializeBoard().  It handles the creation of the 21 tokens (numbered 1-20 and 25)
+	 * and places the tokens randomly on each tile excluding the tiles along the edge of the board
+	 * and the tiles where the players start from. 
+	 */
+	private void initializeTokens(){
+		
+		ArrayList<Token> tokenList = new ArrayList<Token>();
+		
+		int tokenCounter = 0;
+		
+		for(int i=1; i<=20; i++){
+			Token token = new Token(i);
+			tokenList.add(token);
+		}
+		Token token = new Token(25);
+		tokenList.add(token);
+		
+		Collections.shuffle(tokenList);
+		
+		for(int x=1; x<=5; x++){
+			for(int y=1; y<=5; y++){
+				if(!(x%2==0 && y%2==0)){
+					Tile tile = _board.get(x).get(y);
+					tile.setToken(tokenList.get(tokenCounter));
+					tokenCounter++;
+				}
+			}
+		}
+
+		//For Testing Purposes
+		
+//		for(int x=0; x<=6; x++){
+//			for(int y=0; y<=6; y++){
+//				Tile tile = _board.get(x).get(y);
+//				System.out.println("x: "+ x + " y: " + y);
+//	
+//				System.out.println(tile.hasToken());
+//				if(tile.hasToken()){
+//					System.out.println(tile.getToken().getTokenNumber());
+//				}
+//			}
+//		}
+	}
+	
 }

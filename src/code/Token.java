@@ -17,6 +17,7 @@ public class Token {
 	 */
 	public Token(int number){
 		_tokenNumber = number;
+		faceDown = true;
 	}
 	
 	/**
@@ -37,17 +38,16 @@ public class Token {
 	
 	/**
 	 * Getter method for boolean value stating if the token is faced down
-	 * @param number the number on the token which is being checked
 	 * @return returns a boolean value stating if the token is faced down
 	 */
-	public boolean isFacedDown(int number){
+	public boolean isFacedDown(){
 		return faceDown;
 	}
 	
 	/**
 	 * Setter method for setting the token to face down
 	 */
-	public void setFaceDown(){
-		faceDown = true;
+	public void turnToken(){
+		faceDown = false;
 	}
 }
