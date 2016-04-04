@@ -82,7 +82,27 @@ public class Board{
 		_player = new ArrayList<>();
 		for(int i=0;i<names.length;i++){
 			_player.add(new Player(names[i]));			
-		}	
+		}
+		if(_player.size()>=1){
+			Player p1 = _player.get(0);
+			p1.setColor(Color.BLUE);
+			getTile(2,2).setPlayer(p1);
+			}
+		if(_player.size()>=2){
+			Player p2 = _player.get(1);
+			p2.setColor(Color.GREEN);
+			getTile(2,4).setPlayer(p2);
+			}
+		if(_player.size()>=3){
+			Player p3 = _player.get(2);
+			p3.setColor(Color.RED);
+			getTile(4,2).setPlayer(p3);
+			}
+		if(_player.size()==4){
+			Player p4 = _player.get(3);
+			p4.setColor(Color.YELLOW);
+			getTile(4,4).setPlayer(p4);
+			}
 	}
 	
 	/**

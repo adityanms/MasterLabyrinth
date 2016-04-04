@@ -90,4 +90,7 @@ public class Player {
 	public HashSet<Token> getTokenSet(){
 		return _playerTokens;
 	}
+	public void setColor(Color c){
+		_color = c;
+	}
 }
