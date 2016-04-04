@@ -216,6 +216,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				_board.shiftRow(5, false);
 			}
 		});
+
 		_dataPanel.add(_freeTilePanel);
 		_dataPanel.add(_shiftPanel);
 
@@ -237,7 +238,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		// setting north color based on tile's getNorth() value
 		pan = (JPanel) _freeTilePanel.getComponent(1);// see javadoc for why
-														// these are 1,5,7,3
+		// these are 1,5,7,3
 		if (_freeTile.getNorth() == true) {
 			pan.setBackground(Color.BLACK);
 		} else {
@@ -283,7 +284,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		// setting north color based on tile's getNorth() value
 		pan = (JPanel) tile.getComponent(1);// see javadoc for why these are
-											// 1,5,7,3
+		// 1,5,7,3
 		if (_freeTile.getNorth() == true) {
 			pan.setBackground(Color.BLACK);
 		} else {
@@ -331,21 +332,23 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			for (int r = 0; r < Board.HEIGHT; r++) {
 				JPanel p = (JPanel) _boardPanel.getComponent(r * Board.WIDTH + c);
 
-				JLabel pos = new JLabel("" + c + "," + (6 - r));
-				pos.setForeground(Color.WHITE);
+				//JLabel pos = new JLabel("" + c + "," + (6 - r));
+				//pos.setForeground(Color.WHITE);
 
 				Tile t = _board.getTile(c, 6 - r);// 6-r because our 0,0 is at
-													// bottom left instead of
-													// top-left
+				// bottom left instead of
+				// top-left
 
 				// setting center sub-panel to black (component 4 is center
 				// sub-panel)
 				JPanel pan = (JPanel) p.getComponent(4);
 				pan.setBackground(Color.BLACK);
-				pan.add(pos);
+				
+				//pan.add(pos);
+				
 				// setting north color based on tile's getNorth() value
 				pan = (JPanel) p.getComponent(1);// see javadoc for why these
-													// are 1,5,7,3
+				// are 1,5,7,3
 				if (t.getNorth() == true) {
 					pan.setBackground(Color.BLACK);
 				} else {
@@ -373,6 +376,18 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 					pan.setBackground(Color.WHITE);
 				}
 
+				
+				if(t.hasToken()){//if this tile has a token on it
+					pan = (JPanel) p.getComponent(4);
+					pan.setBackground(Color.RED);
+				}
+				if(t.hasPlayer()){
+					if(t.getPlayerList().size()>=1){
+						pan = (JPanel) p.getComponent(0);
+						pan.setBackground(t.getPlayerList().get(0).getColor());
+						};
+						
+				}
 			}
 		}
 		redrawTile();

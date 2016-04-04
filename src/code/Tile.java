@@ -172,4 +172,7 @@ public class Tile {
 	public Player getPlayer(int i){
 		return _players.get(i);
 	}
+	public ArrayList<Player> getPlayerList(){
+		return _players;
+	}
 }
