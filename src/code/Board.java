@@ -30,7 +30,7 @@ public class Board{
 	public final static int NUMBER_OF_STRAIGHTS = 13;
 
 	private boolean _staticboard;
-	
+
 	private Observer _observer;	// who to notify when the model changes
 
 
@@ -45,7 +45,7 @@ public class Board{
 	private ArrayList<Player> _player;
 	private HashSet<Tile> _path;	
 	private int _currentToken = 1;	//Token number that the players are trying to find
-	
+
 	/**
 	 * Creates a board of Tiles.  As of now, it has a parameter to set the board to a dynamic state (for playing) and a 
 	 * static state (for testing).
@@ -72,7 +72,7 @@ public class Board{
 		initializePlayers(names);
 		initializeTokens();
 	}
-	
+
 	/**
 	 * Method to initialize players with the names given in commandline arguments
 	 * @param names Space separated names of players
@@ -87,24 +87,24 @@ public class Board{
 			Player p1 = _player.get(0);
 			p1.setColor(Color.BLUE);
 			getTile(2,2).setPlayer(p1);
-			}
+		}
 		if(_player.size()>=2){
 			Player p2 = _player.get(1);
 			p2.setColor(Color.GREEN);
 			getTile(2,4).setPlayer(p2);
-			}
+		}
 		if(_player.size()>=3){
 			Player p3 = _player.get(2);
 			p3.setColor(Color.RED);
 			getTile(4,2).setPlayer(p3);
-			}
+		}
 		if(_player.size()==4){
 			Player p4 = _player.get(3);
 			p4.setColor(Color.YELLOW);
 			getTile(4,4).setPlayer(p4);
-			}
+		}
 	}
-	
+
 	/**
 	 * Returns a player from the Arraylist of Players
 	 * @param i the index of the player being accessed from the arraylist.
@@ -113,7 +113,7 @@ public class Board{
 	public Player getPlayer(int i){
 		return _player.get(i);
 	}
-	
+
 	/**
 	 * Returns the number of players on the board
 	 * @return Number of players
@@ -151,9 +151,9 @@ public class Board{
 		initializeStaticTiles();
 		_freetile = _tileset.get(0);
 		_tileset.remove(0);
-		
+
 	}
-	
+
 	public void setObserver(Observer obs) {
 		_observer = obs;
 	}
@@ -414,7 +414,7 @@ public class Board{
 				if(getTile(x,y).getToken().isFacedDown()){
 					getTile(x,y).getToken().turnToken();
 				}
-				
+
 				if(getTile(x,y).getToken().getTokenNumber()==_currentToken){
 					p.addTokenSet(getTile(x,y).getToken());
 					getTile(x,y).removeToken();
@@ -455,7 +455,7 @@ public class Board{
 					_board.get(col).add(0, _freetile);
 					_freetile = t;
 				}
-				
+
 				if(_freetile.hasToken()){
 					if(top){
 						Tile t = getTile(col,6);
@@ -470,7 +470,7 @@ public class Board{
 						_freetile.removeToken();
 					}
 				}
-				
+
 				_lastShiftType = true;
 				_lastShiftDirection = top;
 				_lastShiftPos = col;
@@ -516,7 +516,7 @@ public class Board{
 					_board.get(0).set(row, _freetile);
 					_freetile = t;
 				}
-				
+
 				if(_freetile.hasToken()){
 					if(back){
 						Tile t = getTile(6,row);
@@ -531,7 +531,7 @@ public class Board{
 						_freetile.removeToken();
 					}
 				}
-				
+
 				_lastShiftType = false;
 				_lastShiftDirection = back;
 				_lastShiftPos = row;
@@ -552,20 +552,20 @@ public class Board{
 	 * and the tiles where the players start from. 
 	 */
 	private void initializeTokens(){
-		
+
 		ArrayList<Token> tokenList = new ArrayList<Token>();
-		
+
 		int tokenCounter = 0;
-		
+
 		for(int i=1; i<=20; i++){
 			Token token = new Token(i);
 			tokenList.add(token);
 		}
 		Token token = new Token(25);
 		tokenList.add(token);
-		
+
 		Collections.shuffle(tokenList);
-		
+
 		for(int x=1; x<=5; x++){
 			for(int y=1; y<=5; y++){
 				if(!(x%2==0 && y%2==0)){
@@ -577,18 +577,18 @@ public class Board{
 		}
 
 		//For Testing Purposes
-		
-//		for(int x=0; x<=6; x++){
-//			for(int y=0; y<=6; y++){
-//				Tile tile = _board.get(x).get(y);
-//				System.out.println("x: "+ x + " y: " + y);
-//	
-//				System.out.println(tile.hasToken());
-//				if(tile.hasToken()){
-//					System.out.println(tile.getToken().getTokenNumber());
-//				}
-//			}
-//		}
+
+		//		for(int x=0; x<=6; x++){
+		//			for(int y=0; y<=6; y++){
+		//				Tile tile = _board.get(x).get(y);
+		//				System.out.println("x: "+ x + " y: " + y);
+		//	
+		//				System.out.println(tile.hasToken());
+		//				if(tile.hasToken()){
+		//					System.out.println(tile.getToken().getTokenNumber());
+		//				}
+		//			}
+		//		}
 	}
-	
+
 }

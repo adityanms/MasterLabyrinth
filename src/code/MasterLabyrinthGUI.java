@@ -95,6 +95,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 						pan.setOpaque(true);
 						pan.setPreferredSize(new Dimension(20, 20));
 						pan.setBackground(Color.WHITE);
+						pan.add(new JLabel());//each subpanel has a JLabel on it. Access it via (JLabel)getComponent(0) in update()
 						p.add(pan);
 					}
 
@@ -343,9 +344,9 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				// sub-panel)
 				JPanel pan = (JPanel) p.getComponent(4);
 				pan.setBackground(Color.BLACK);
-				
+
 				//pan.add(pos);
-				
+
 				// setting north color based on tile's getNorth() value
 				pan = (JPanel) p.getComponent(1);// see javadoc for why these
 				// are 1,5,7,3
@@ -376,17 +377,40 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 					pan.setBackground(Color.WHITE);
 				}
 
-				
+
 				if(t.hasToken()){//if this tile has a token on it
+					Token token = t.getToken();
 					pan = (JPanel) p.getComponent(4);
-					pan.setBackground(Color.RED);
+					pan.setBackground(Color.PINK);
+					if(token.isFacedDown()){
+						System.out.println("??");
+						JLabel j = (JLabel)pan.getComponent(0);
+						j.setText("??");
+					}
+					else{
+						JLabel j = (JLabel)pan.getComponent(0);
+						j.setText(token.getTokenNumber()+"");
+					}
 				}
-				if(t.hasPlayer()){
-					if(t.getPlayerList().size()>=1){
+				if(t.hasPlayer()){//if this tile has at least 1 player on it
+					if(t.getPlayerList().size()>=1){//tile has at least one player
 						pan = (JPanel) p.getComponent(0);
 						pan.setBackground(t.getPlayerList().get(0).getColor());
-						};
-						
+					}
+					if(t.getPlayerList().size()>=2){//tile has at least two players on it
+						pan = (JPanel)p.getComponent(2);
+						pan.setBackground(t.getPlayerList().get(1).getColor());
+					}
+					if(t.getPlayerList().size()>=3){//tile has at least three players on it
+						pan = (JPanel)p.getComponent(6);
+						pan.setBackground(t.getPlayerList().get(2).getColor());
+					}
+					if(t.getPlayerList().size()==4){//tile has 4 players on it
+						pan = (JPanel)p.getComponent(8);
+						pan.setBackground(t.getPlayerList().get(3).getColor());
+					}
+
+
 				}
 			}
 		}
