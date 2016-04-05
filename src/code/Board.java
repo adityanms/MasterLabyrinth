@@ -519,13 +519,13 @@ public class Board{
 				
 				if(_freetile.hasToken()){
 					if(back){
-						Tile t = getTile(row,6);
+						Tile t = getTile(6,row);
 						Token tok = _freetile.getToken();
 						t.setToken(tok);
 						_freetile.removeToken();
 					}
 					else{
-						Tile t = getTile(row,0);
+						Tile t = getTile(0,row);
 						Token tok = _freetile.getToken();
 						t.setToken(tok);
 						_freetile.removeToken();
