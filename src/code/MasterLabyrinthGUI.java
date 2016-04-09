@@ -1,5 +1,6 @@
 package code;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import code.Observer;
 
@@ -27,7 +29,7 @@ import code.Observer;
  *
  */
 public class MasterLabyrinthGUI implements Runnable, Observer {
-	private JPanel _boardPanel, _dataPanel;
+	private JPanel _boardPanel, _dataPanel, _gamePanel;
 	private JFrame _window;
 	private Board _board;
 	private Tile _freeTile;
@@ -56,18 +58,76 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		_freeTile = _board.getFreeTile();
 		_dataPanel = new JPanel();
 		_freeTilePanel = new JPanel();
-
 		initializeBoard();
+		initializeGamePanel();
 		initializeData();
 		update();
+	
 		_window.setLayout(new GridLayout(1, 2));
-		_window.add(_boardPanel);
+		_window.add(_gamePanel);
+		//_window.add(_boardPanel);
 		_window.add(_dataPanel);
 		_window.pack();
 		_window.setVisible(true);
 
 	}
+	
+	private void initializeGamePanel(){
+		_gamePanel = new JPanel();
+		_gamePanel.setLayout(new BorderLayout());
+		_gamePanel.add(_boardPanel, BorderLayout.CENTER);
+		
+		JPanel top = new JPanel();
+		JPanel bottom = new JPanel();
+		top.setLayout(new GridLayout(1,7));
+		bottom.setLayout(new GridLayout(1,7));
+		
+	
+		for(int i=0;i<7;i++){
+			;
+			if(i%2 != 0){
+				JButton topShift = new JButton("Shift");
+				JButton bottomShift = new JButton("Shift");
+				top.add(topShift);
+				bottom.add(bottomShift);
+				topShift.addActionListener(new ShiftButtonListener(_board,i,true,false));
+				bottomShift.addActionListener(new ShiftButtonListener(_board,i,false,false));
+			}
+			
+			else{
+				top.add(new JPanel());
+				bottom.add(new JPanel());
+			}	
+		}
+		
+		JPanel left = new JPanel();
+		JPanel right = new JPanel();
+		left.setLayout(new GridLayout(7,1));
+		right.setLayout(new GridLayout(7,1));
+		for(int i=0;i<7;i++){
+			if(i%2 != 0){
+				JButton rightShift = new JButton("Shift");
+				JButton leftShift = new JButton("Shift");
+				right.add(rightShift);
+				left.add(leftShift);
+				rightShift.addActionListener(new ShiftButtonListener(_board,6-i,true,true));
+				leftShift.addActionListener(new ShiftButtonListener(_board,6-i,false,true));
+			}
+			
+			else{
+				right.add(new JPanel());
+				left.add(new JPanel());
+			}
+				
+		}
 
+		_gamePanel.add(top, BorderLayout.NORTH);
+		_gamePanel.add(bottom, BorderLayout.SOUTH);
+		_gamePanel.add(right, BorderLayout.EAST);
+		_gamePanel.add(left, BorderLayout.WEST);
+	}
+	
+	
 	/**
 	 * Sets up a 7x7 grid of JPanels which will hold visual representations of
 	 * Tiles. Each JPanel is a 3x3 grid which will hold visual representation of
@@ -118,108 +178,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 			}
 		});
-		JPanel _shiftPanel = new JPanel(new GridLayout(6,2));
-		_shiftPanel.setBorder(new LineBorder(Color.BLACK));
-		JButton shift = new JButton("Shift Down 2");
-		_shiftPanel.add(shift);
-		shift.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(1, true);
-			}
-		});
-		JButton shift0 = new JButton("Shift Up 2");
-		_shiftPanel.add(shift0);
-		shift0.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(1, false);
-			}
-		});
-		JButton shift1 = new JButton("Shift Down 4");
-		_shiftPanel.add(shift1);
-		shift1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(3, true);
-			}
-		});
-		JButton shift2 = new JButton("Shift Up 4");
-		_shiftPanel.add(shift2);
-		shift2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(3, false);
-			}
-		});
-
-		JButton shift3 = new JButton("Shift Down 6");
-		_shiftPanel.add(shift3);
-		shift3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(5, true);
-			}
-		});
-		JButton shift4 = new JButton("Shift Up 6");
-		_shiftPanel.add(shift4);
-		shift4.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftColumn(5, false);
-			}
-		});
-		JButton shift5 = new JButton("Shift Left 6");
-		_shiftPanel.add(shift5);
-		shift5.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(1, true);
-			}
-		});
-		JButton shift6 = new JButton("Shift Right 6");
-		_shiftPanel.add(shift6);
-		shift6.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(1, false);
-			}
-		});
-		JButton shift7 = new JButton("Shift Left 4");
-		_shiftPanel.add(shift7);
-		shift7.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(3, true);
-			}
-		});
-		JButton shift8 = new JButton("Shift Right 4");
-		_shiftPanel.add(shift8);
-		shift8.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(3, false);
-			}
-		});
-		JButton shift9 = new JButton("Shift Left 2");
-		_shiftPanel.add(shift9);
-		shift9.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(5, true);
-			}
-		});
-		JButton shift10 = new JButton("Shift Right 2");
-		_shiftPanel.add(shift10);
-		shift10.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				_board.shiftRow(5, false);
-			}
-		});
 
 		_dataPanel.add(_freeTilePanel);
-		_dataPanel.add(_shiftPanel);
 
 		_freeTilePanel.setLayout(new GridLayout(3, 3));
 		for (int i = 0; i < 3; i++) {// 3x3 grid on face of tile
