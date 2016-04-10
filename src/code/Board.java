@@ -81,7 +81,9 @@ public class Board{
 	private void initializePlayers(String[] names) {
 		_player = new ArrayList<>();
 		for(int i=0;i<names.length;i++){
-			_player.add(new Player(names[i]));			
+			if(i<4){
+				_player.add(new Player(names[i]));
+			}
 		}
 		if(_player.size()>=1){
 			Player p1 = _player.get(0);
