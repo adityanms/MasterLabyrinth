@@ -431,7 +431,7 @@ public class Board{
 				}
 
 			}
-
+			gameStateChanged();
 			return true;
 		}
 		return false;

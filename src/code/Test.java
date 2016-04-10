@@ -13,7 +13,10 @@ public class Test {
 		names[3] = "Jayne";
 		Board b = new Board(true, names);
 		SwingUtilities.invokeLater(new MasterLabyrinthGUI(b));
-		b.findPath(b.getTile(2,2));
-		b.movePlayer(b.getPlayer(0), 1, 2);
+		b.findPath(b.getTile(4,2));
+		b.movePlayer(b.getPlayer(3), 4, 3);
+		b.findPath(b.getTile(4,2));
+		b.movePlayer(b.getPlayer(2), 4, 3);
+		
 	}
 }

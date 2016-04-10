@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import code.Observer;
@@ -234,7 +235,26 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			_playerButtons.add(new JButton(_board.getPlayer(i).getPlayerName()));
 			_dataPanel.add(_playerButtons.get(i));
 		}
-
+		
+		
+		JTextField textx = new JTextField(5);
+		JTextField texty = new JTextField(5);
+		
+		JPanel movePanel = new JPanel();
+		JButton moveButton = new JButton("Move");
+		
+		moveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Player p = _board.getPlayer(0);
+				_board.findPath(_board.getTile(p.getX(), p.getY()));
+				_board.movePlayer(p, Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()));
+			}
+		});
+		movePanel.add(textx);
+		movePanel.add(texty);
+		movePanel.add(moveButton);
+		_dataPanel.add(movePanel);
 	}
 
 	private void redrawTile() {
@@ -291,6 +311,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 	@Override
 	public void update() {
+		System.out.println(""+_board.getPlayer(0).getX()+_board.getPlayer(0).getX());
 		for (int c = 0; c < Board.WIDTH; c++) {
 			for (int r = 0; r < Board.HEIGHT; r++) {
 				JPanel p = (JPanel) _boardPanel.getComponent(r * Board.WIDTH + c);
@@ -345,7 +366,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 					pan = (JPanel) p.getComponent(4);
 					pan.setBackground(Color.PINK);
 					if(token.isFacedDown()){
-						System.out.println("??");
+						//System.out.println("??");
 						JLabel j = (JLabel)pan.getComponent(0);
 						j.setText("??");
 					}
