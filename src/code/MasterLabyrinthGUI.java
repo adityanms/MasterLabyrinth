@@ -39,8 +39,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	/**
 	 * Constructor.
 	 * 
-	 * @param b
-	 *            MasterLabyrinth Board obj
+	 * @param b MasterLabyrinth Board obj
 	 */
 	public MasterLabyrinthGUI(Board b) {
 		_board = b;
@@ -71,6 +70,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		_window.setVisible(true);
 
 	}
+	/**
+	 * This method initializes the game panel. The game panel consists of the 
+	 * board in between, and shift buttons surrounding it. 
+	 * This is a border layout, as opposed to a Gridlayout.
+	 */
 	
 	private void initializeGamePanel(){
 		_gamePanel = new JPanel();
@@ -81,10 +85,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		JPanel bottom = new JPanel();
 		top.setLayout(new GridLayout(1,7));
 		bottom.setLayout(new GridLayout(1,7));
-		
-	
 		for(int i=0;i<7;i++){
-			;
+			
 			if(i%2 != 0){
 				JButton topShift = new JButton("Shift");
 				JButton bottomShift = new JButton("Shift");
@@ -154,7 +156,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 						JPanel pan = new JPanel();
 						pan.setOpaque(true);
 						pan.setPreferredSize(new Dimension(20, 20));
-						pan.setBackground(Color.WHITE);
+						pan.setBackground(Color.BLACK);
 						pan.add(new JLabel());//each subpanel has a JLabel on it. Access it via (JLabel)getComponent(0) in update()
 						p.add(pan);
 					}
@@ -187,7 +189,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				JPanel pan = new JPanel();
 				pan.setOpaque(true);
 				pan.setPreferredSize(new Dimension(20, 20));
-				pan.setBackground(Color.WHITE);
+				pan.setBackground(Color.BLACK);
 
 				_freeTilePanel.add(pan);
 			}
@@ -195,36 +197,36 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		// setting center sub-panel to black (component 4 is center sub-panel)
 		JPanel pan = (JPanel) _freeTilePanel.getComponent(4);
-		pan.setBackground(Color.BLACK);
+		pan.setBackground(Color.ORANGE);
 
 		// setting north color based on tile's getNorth() value
 		pan = (JPanel) _freeTilePanel.getComponent(1);// see javadoc for why
 		// these are 1,5,7,3
 		if (_freeTile.getNorth() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting east color based on tile's getEast() value
 		pan = (JPanel) _freeTilePanel.getComponent(5);
 		if (_freeTile.getEast() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting south color based on tile's getSouth() value
 		pan = (JPanel) _freeTilePanel.getComponent(7);
 		if (_freeTile.getSouth() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting west color based on tile's getWest() value
 		pan = (JPanel) _freeTilePanel.getComponent(3);
 		if (_freeTile.getWest() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 
 		_playerButtons = new ArrayList<>();
@@ -241,36 +243,36 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		// setting center sub-panel to black (component 4 is center sub-panel)
 		JPanel pan = (JPanel) tile.getComponent(4);
-		pan.setBackground(Color.BLACK);
+		pan.setBackground(Color.ORANGE);
 
 		// setting north color based on tile's getNorth() value
 		pan = (JPanel) tile.getComponent(1);// see javadoc for why these are
 		// 1,5,7,3
 		if (_freeTile.getNorth() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting east color based on tile's getEast() value
 		pan = (JPanel) tile.getComponent(5);
 		if (_freeTile.getEast() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting south color based on tile's getSouth() value
 		pan = (JPanel) tile.getComponent(7);
 		if (_freeTile.getSouth() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 		// setting west color based on tile's getWest() value
 		pan = (JPanel) tile.getComponent(3);
 		if (_freeTile.getWest() == true) {
-			pan.setBackground(Color.BLACK);
+			pan.setBackground(Color.ORANGE);
 		} else {
-			pan.setBackground(Color.WHITE);
+			pan.setBackground(Color.BLACK);
 		}
 
 		System.out.println("East " + _freeTile.getEast());
@@ -303,7 +305,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				// setting center sub-panel to black (component 4 is center
 				// sub-panel)
 				JPanel pan = (JPanel) p.getComponent(4);
-				pan.setBackground(Color.BLACK);
+				pan.setBackground(Color.ORANGE);
 
 				//pan.add(pos);
 
@@ -311,30 +313,30 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				pan = (JPanel) p.getComponent(1);// see javadoc for why these
 				// are 1,5,7,3
 				if (t.getNorth() == true) {
-					pan.setBackground(Color.BLACK);
+					pan.setBackground(Color.ORANGE);
 				} else {
-					pan.setBackground(Color.WHITE);
+					pan.setBackground(Color.BLACK);
 				}
 				// setting east color based on tile's getEast() value
 				pan = (JPanel) p.getComponent(5);
 				if (t.getEast() == true) {
-					pan.setBackground(Color.BLACK);
+					pan.setBackground(Color.ORANGE);
 				} else {
-					pan.setBackground(Color.WHITE);
+					pan.setBackground(Color.BLACK);
 				}
 				// setting south color based on tile's getSouth() value
 				pan = (JPanel) p.getComponent(7);
 				if (t.getSouth() == true) {
-					pan.setBackground(Color.BLACK);
+					pan.setBackground(Color.ORANGE);
 				} else {
-					pan.setBackground(Color.WHITE);
+					pan.setBackground(Color.BLACK);
 				}
 				// setting west color based on tile's getWest() value
 				pan = (JPanel) p.getComponent(3);
 				if (t.getWest() == true) {
-					pan.setBackground(Color.BLACK);
+					pan.setBackground(Color.ORANGE);
 				} else {
-					pan.setBackground(Color.WHITE);
+					pan.setBackground(Color.BLACK);
 				}
 
 
