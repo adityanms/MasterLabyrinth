@@ -637,7 +637,6 @@ public class Board{
 		_freetile.rotate();
 		gameStateChanged();
 	}
-
 	/**
 	 * Helper method for initializeBoard().  It handles the creation of the 21 tokens (numbered 1-20 and 25)
 	 * and places the tokens randomly on each tile excluding the tiles along the edge of the board
