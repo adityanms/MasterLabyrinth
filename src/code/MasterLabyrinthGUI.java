@@ -354,6 +354,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 						j.setText(token.getTokenNumber()+"");
 					}
 				}
+				else{
+					pan = (JPanel) p.getComponent(4);
+					JLabel j = (JLabel)pan.getComponent(0);
+					j.setText("");
+				}
 				if(t.hasPlayer()){//if this tile has at least 1 player on it
 					if(t.getPlayerList().size()>=1){//tile has at least one player
 						pan = (JPanel) p.getComponent(0);
