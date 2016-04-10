@@ -61,7 +61,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		initializeGamePanel();
 		initializeData();
 		update();
-	
+
 		_window.setLayout(new GridLayout(1, 2));
 		_window.add(_gamePanel);
 		//_window.add(_boardPanel);
@@ -75,18 +75,18 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	 * board in between, and shift buttons surrounding it. 
 	 * This is a border layout, as opposed to a Gridlayout.
 	 */
-	
+
 	private void initializeGamePanel(){
 		_gamePanel = new JPanel();
 		_gamePanel.setLayout(new BorderLayout());
 		_gamePanel.add(_boardPanel, BorderLayout.CENTER);
-		
+
 		JPanel top = new JPanel();
 		JPanel bottom = new JPanel();
 		top.setLayout(new GridLayout(1,7));
 		bottom.setLayout(new GridLayout(1,7));
 		for(int i=0;i<7;i++){
-			
+
 			if(i%2 != 0){
 				JButton topShift = new JButton("Shift");
 				JButton bottomShift = new JButton("Shift");
@@ -95,13 +95,13 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				topShift.addActionListener(new ShiftButtonListener(_board,i,true,false));
 				bottomShift.addActionListener(new ShiftButtonListener(_board,i,false,false));
 			}
-			
+
 			else{
 				top.add(new JPanel());
 				bottom.add(new JPanel());
 			}	
 		}
-		
+
 		JPanel left = new JPanel();
 		JPanel right = new JPanel();
 		left.setLayout(new GridLayout(7,1));
@@ -115,12 +115,12 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				rightShift.addActionListener(new ShiftButtonListener(_board,6-i,true,true));
 				leftShift.addActionListener(new ShiftButtonListener(_board,6-i,false,true));
 			}
-			
+
 			else{
 				right.add(new JPanel());
 				left.add(new JPanel());
 			}
-				
+
 		}
 
 		_gamePanel.add(top, BorderLayout.NORTH);
@@ -128,8 +128,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		_gamePanel.add(right, BorderLayout.EAST);
 		_gamePanel.add(left, BorderLayout.WEST);
 	}
-	
-	
+
+
 	/**
 	 * Sets up a 7x7 grid of JPanels which will hold visual representations of
 	 * Tiles. Each JPanel is a 3x3 grid which will hold visual representation of
@@ -376,8 +376,20 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 						pan = (JPanel)p.getComponent(8);
 						pan.setBackground(t.getPlayerList().get(3).getColor());
 					}
+					
 
 
+				}
+				else{
+					pan = (JPanel) p.getComponent(0);
+					pan.setBackground(Color.BLACK);
+					pan = (JPanel) p.getComponent(2);
+					pan.setBackground(Color.BLACK);
+					pan = (JPanel) p.getComponent(6);
+					pan.setBackground(Color.BLACK);
+					pan = (JPanel) p.getComponent(8);
+					pan.setBackground(Color.BLACK);
+					
 				}
 			}
 		}
