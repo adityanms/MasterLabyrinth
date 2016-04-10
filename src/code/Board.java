@@ -481,6 +481,10 @@ public class Board{
 						ArrayList<Player> tempList;
 						tempList = _freetile.getPlayerList();
 						t.setPlayerList(tempList);
+						for(int i =0; i < tempList.size();i++){
+							tempList.get(i).setX(col);
+							tempList.get(i).setY(6);	
+						}
 						_freetile.clearPlayerList();
 						
 					}
@@ -489,6 +493,10 @@ public class Board{
 						ArrayList<Player> tempList;
 						tempList = _freetile.getPlayerList();
 						t.setPlayerList(tempList);
+						for(int i =0; i < tempList.size();i++){
+							tempList.get(i).setX(col);
+							tempList.get(i).setY(0);	
+						}
 						_freetile.clearPlayerList();
 					}
 				}
@@ -560,6 +568,10 @@ public class Board{
 						ArrayList<Player> tempList;
 						tempList = _freetile.getPlayerList();
 						t.setPlayerList(tempList);
+						for(int i =0; i < tempList.size();i++){
+							tempList.get(i).setX(6);
+							tempList.get(i).setY(row);	
+						}
 						_freetile.clearPlayerList();
 					}
 					else{
@@ -567,6 +579,10 @@ public class Board{
 						ArrayList<Player> tempList;
 						tempList = _freetile.getPlayerList();
 						t.setPlayerList(tempList);
+						for(int i =0; i < tempList.size();i++){
+							tempList.get(i).setX(0);
+							tempList.get(i).setY(row);	
+						}
 						_freetile.clearPlayerList();
 					}
 				}
