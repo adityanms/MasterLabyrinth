@@ -415,6 +415,13 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			}
 		}
 		redrawTile();
+		Path pathsFile = new Path(this);
+		pathsFile.updatePaths();
+	}
+
+	public JPanel getBoardPanel() {
+		// TODO Auto-generated method stub
+		return _boardPanel;
 	}
 
 }
