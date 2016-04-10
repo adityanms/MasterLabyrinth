@@ -98,7 +98,7 @@ public class Board{
 			p3.setColor(Color.RED);
 			getTile(4,2).setPlayer(p3);
 		}
-		if(_player.size()==4){
+		if(_player.size()>=4){
 			Player p4 = _player.get(3);
 			p4.setColor(Color.YELLOW);
 			getTile(4,4).setPlayer(p4);
