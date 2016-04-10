@@ -175,4 +175,12 @@ public class Tile {
 	public ArrayList<Player> getPlayerList(){
 		return _players;
 	}
+	
+	public void setPlayerList(ArrayList<Player> list){
+		 _players.addAll(list);
+	} 
+	
+	public void clearPlayerList(){
+		 _players.clear();
+	} 
 }

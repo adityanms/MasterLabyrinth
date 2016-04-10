@@ -1,13 +1,14 @@
 package code;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Player {
 	private Color _color;
 	private int _x, _y;
 	private String _name;
-	private HashSet<Token> _playerTokens;	//Tokens that the player has obtained
+	private ArrayList<Token> _playerTokens;	//Tokens that the player has obtained
 	
 	/**
 	 * Constructor
@@ -23,7 +24,7 @@ public class Player {
 	 */
 	public Player(String name){
 		_name=name;		
-		_playerTokens = new HashSet<Token>();
+		_playerTokens = new ArrayList<Token>();
 	}
 	
 	/**
@@ -87,10 +88,20 @@ public class Player {
 		_playerTokens.add(t);
 	}
 	
-	public HashSet<Token> getTokenSet(){
+	public ArrayList<Token> getTokenSet(){
 		return _playerTokens;
 	}
 	public void setColor(Color c){
 		_color = c;
+	}
+	
+	public int getScore(){
+		
+		int score = 0;
+		
+		for(int i=0; i<_playerTokens.size(); i++){
+			score = score + _playerTokens.get(i).getTokenNumber();
+		}
+		return score;
 	}
 }
