@@ -452,12 +452,28 @@ public class Board{
 					_board.get(col).remove(0);
 					_board.get(col).add(_freetile);
 					_freetile = t;
+					
+					for(int j=0; j<6; j++)
+						if(_board.get(col).get(j).hasPlayer()){
+							for(int i =0; i < _board.get(col).get(j).getPlayerList().size(); i++){
+								int OldY = _board.get(col).get(j).getPlayerList().get(i).getY();
+								_board.get(col).get(j).getPlayerList().get(i).setY(OldY-1);
+							}
+						}
 				}
 				else{
 					Tile t = getTile(col,6);
 					_board.get(col).remove(6);
 					_board.get(col).add(0, _freetile);
 					_freetile = t;
+					
+					for(int j=0; j<6; j++)
+						if(_board.get(col).get(j).hasPlayer()){
+							for(int i =0; i < _board.get(col).get(j).getPlayerList().size(); i++){
+								int OldY = _board.get(col).get(j).getPlayerList().get(i).getY();
+								_board.get(col).get(j).getPlayerList().get(i).setY(OldY+1);
+							}
+						}
 				}
 
 				if(_freetile.hasToken()){
@@ -534,6 +550,17 @@ public class Board{
 					_board.get(5).set(row, getTile(6,row));
 					_board.get(6).set(row, _freetile);
 					_freetile = t;
+					
+					for(int i=0;i<6;i++){
+						if(_board.get(i).get(row).hasPlayer()){
+							for(int j=0;j<_board.get(i).get(row).getPlayerList().size();j++){
+								int OldX = _board.get(i).get(row).getPlayerList().get(j).getX();
+								
+								_board.get(i).get(row).getPlayerList().get(j).setX(OldX-1);
+							}
+						}
+					}
+					
 				}
 				else{
 					Tile t = getTile(6,row);
@@ -545,6 +572,16 @@ public class Board{
 					_board.get(1).set(row, getTile(0,row));
 					_board.get(0).set(row, _freetile);
 					_freetile = t;
+					
+					for(int i=0;i<6;i++){
+						if(_board.get(i).get(row).hasPlayer()){
+							for(int j=0;j<_board.get(i).get(row).getPlayerList().size();j++){
+								int OldX = _board.get(i).get(row).getPlayerList().get(j).getX();
+								
+								_board.get(i).get(row).getPlayerList().get(j).setX(OldX+1);
+							}
+						}
+					}
 				}
 
 				if(_freetile.hasToken()){
