@@ -90,22 +90,22 @@ public class Board{
 		if(_player.size()>=1){
 			Player p1 = _player.get(0);
 			p1.setColor(Color.BLUE);
-			getTile(2,2).setPlayer(p1);
+			getTile(2,2).setPlayer(p1,2,2);
 		}
 		if(_player.size()>=2){
 			Player p2 = _player.get(1);
 			p2.setColor(Color.GREEN);
-			getTile(2,4).setPlayer(p2);
+			getTile(2,4).setPlayer(p2,2,4);
 		}
 		if(_player.size()>=3){
 			Player p3 = _player.get(2);
 			p3.setColor(Color.RED);
-			getTile(4,2).setPlayer(p3);
+			getTile(4,2).setPlayer(p3,4,2);
 		}
 		if(_player.size()>=4){
 			Player p4 = _player.get(3);
 			p4.setColor(Color.YELLOW);
-			getTile(4,4).setPlayer(p4);
+			getTile(4,4).setPlayer(p4,4,4);
 		}
 	}
 
@@ -404,13 +404,13 @@ public class Board{
 		p.setX(x);
 		p.setY(y);
 		Tile t = getTile(x, y);
-		t.setPlayer(p);
+		t.setPlayer(p,x,y);
 	}
 
 	public boolean movePlayer(Player p, int x, int y) {
 		if(_path.contains(getTile(x,y))){
 			getTile(p.getX(), p.getY()).removePlayer(p);
-			getTile(x,y).setPlayer(p);
+			getTile(x,y).setPlayer(p,x,y);
 			p.setX(x);
 			p.setY(y);
 

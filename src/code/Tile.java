@@ -162,8 +162,10 @@ public class Tile {
 		}
 		return true;
 	}
-	public void setPlayer(Player p){
+	public void setPlayer(Player p, int x, int y){
 		_players.add(p);
+		p.setX(x);
+		p.setY(y);
 	}
 	public void removePlayer(Player p){
 		_players.remove(p);
