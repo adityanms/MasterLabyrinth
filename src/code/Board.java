@@ -474,6 +474,24 @@ public class Board{
 						_freetile.removeToken();
 					}
 				}
+				
+				if(_freetile.hasPlayer()){
+					if(top){
+						Tile t = getTile(col,6);
+						ArrayList<Player> tempList;
+						tempList = _freetile.getPlayerList();
+						t.setPlayerList(tempList);
+						_freetile.clearPlayerList();
+						
+					}
+					else{
+						Tile t = getTile(col,0);
+						ArrayList<Player> tempList;
+						tempList = _freetile.getPlayerList();
+						t.setPlayerList(tempList);
+						_freetile.clearPlayerList();
+					}
+				}
 
 				_lastShiftType = true;
 				_lastShiftDirection = top;
@@ -533,6 +551,23 @@ public class Board{
 						Token tok = _freetile.getToken();
 						t.setToken(tok);
 						_freetile.removeToken();
+					}
+				}
+				
+				if(_freetile.hasPlayer()){
+					if(back){
+						Tile t = getTile(6,row);
+						ArrayList<Player> tempList;
+						tempList = _freetile.getPlayerList();
+						t.setPlayerList(tempList);
+						_freetile.clearPlayerList();
+					}
+					else{
+						Tile t = getTile(0,row);
+						ArrayList<Player> tempList;
+						tempList = _freetile.getPlayerList();
+						t.setPlayerList(tempList);
+						_freetile.clearPlayerList();
 					}
 				}
 
