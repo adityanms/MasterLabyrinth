@@ -435,8 +435,9 @@ public class Board{
 				}
 
 			}
+			
+			switchPlayer();
 			gameStateChanged();
-			_currentStage = 0;
 			return true;
 		}
 		return false;

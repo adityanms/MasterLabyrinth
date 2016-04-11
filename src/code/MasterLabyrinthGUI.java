@@ -252,10 +252,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_board.findPath();
-				if(_board.movePlayer(Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()))){
-					_board.switchPlayer();
-				};
-			}
+				_board.movePlayer(Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()));
+			};
 		});
 		_movePanel.add(textx);
 		_movePanel.add(texty);
@@ -436,8 +434,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		redrawTile();
 		Path pathsFile = new Path(this);
 		pathsFile.updatePaths();
-		
-		
+
+
 		for(int i=0; i<_playerButtons.size();i++){
 			JButton jb = _playerButtons.get(i);
 			if(_board.getCurrentPlayer()==_board.getPlayer(i)){
@@ -448,7 +446,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				jb.setEnabled(false);
 				Color c = jb.getBackground().darker().darker();
 				jb.setBackground(c);
-				
+
 			}	
 		}
 	}
