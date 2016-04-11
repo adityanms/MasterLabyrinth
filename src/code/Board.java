@@ -436,6 +436,7 @@ public class Board{
 
 			}
 			gameStateChanged();
+			_currentStage = 0;
 			return true;
 		}
 		return false;
@@ -525,6 +526,7 @@ public class Board{
 				_lastShiftDirection = top;
 				_lastShiftPos = col;
 				gameStateChanged();
+				_currentStage = 1;
 				return true;
 			}
 		}
@@ -631,7 +633,8 @@ public class Board{
 				_lastShiftType = false;
 				_lastShiftDirection = back;
 				_lastShiftPos = row;
-				gameStateChanged();	
+				_currentStage = 1;
+				gameStateChanged();
 				return true;
 			}
 		}
