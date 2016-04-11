@@ -441,8 +441,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		for(int i=0; i<_playerButtons.size();i++){
 			JButton jb = _playerButtons.get(i);
 			if(_board.getCurrentPlayer()==_board.getPlayer(i)){
+				
 				jb.setEnabled(true);
-				jb.setBackground(_board.getPlayer(i).getColor());
+				jb.setVisible(false);
+				jb.setForeground(_board.getPlayer(i).getColor());
+				jb.setOpaque(true);
 			}
 			else{
 				jb.setEnabled(false);
