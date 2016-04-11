@@ -267,12 +267,14 @@ public class Board{
 	 * on a player's turn, after their tile move, with the Tile that the Player is on.
 	 * @param t the tile to find available paths from
 	 */
-	public void findPath(Tile t){ 
-		Point p = getTileLocation(t);
+	public void findPath(){ 
+		Player p = getPlayer(_currentPlayer);
+		Point point = new Point(p.getX(),p.getY());
 		_path = new HashSet<Tile>();
-		_path.add(t);
-		checkNeighbors(p.x,p.y);
-		System.out.println("Path size is: "+_path.size());
+		_path.add(getTile(p.getX(),p.getY()));
+		checkNeighbors(point.x,point.y);
+		_path.remove(getTile(p.getX(),p.getY()));
+		System.out.println("Path size is: "+_path.size()+" (Excluding current tile)");
 	}
 	/**
 	 * Helper method for findPath.  The logic involved in checking tiles that are adjacent to a given Tile.
@@ -407,7 +409,8 @@ public class Board{
 		t.setPlayer(p,x,y);
 	}
 
-	public boolean movePlayer(Player p, int x, int y) {
+	public boolean movePlayer(int x, int y) {
+		Player p = getPlayer(_currentPlayer);
 		if(_path.contains(getTile(x,y))){
 			getTile(p.getX(), p.getY()).removePlayer(p);
 			getTile(x,y).setPlayer(p,x,y);
@@ -417,6 +420,7 @@ public class Board{
 			if(getTile(x,y).hasToken()){
 				if(getTile(x,y).getToken().isFacedDown()){
 					getTile(x,y).getToken().turnToken();
+					System.out.println("Token flipped.");
 				}
 
 				if(getTile(x,y).getToken().getTokenNumber()==_currentToken){
@@ -682,12 +686,12 @@ public class Board{
 		//		}
 	}
 	
-	public void SwitchPayer(){
-		if(_currentPlayer < _player.size()){
+	public void switchPlayer(){
+		if(_currentPlayer < _player.size()-1){
 			_currentPlayer++;
 		}
 		else{
-			_currentPlayer = 1;
+			_currentPlayer = 0;
 		}
 		
 		_currentStage = 1;

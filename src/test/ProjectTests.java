@@ -37,42 +37,42 @@ public class ProjectTests {
 	}
 	@Test public void pathingTest01(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(3, 1));
+		b.findPath();
 		int expected = 14;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
 	@Test public void pathingTest02(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(0, 0));
+		b.findPath();
 		int expected = 1;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
 	@Test public void pathingTest03(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(0, 1));
+		b.findPath();
 		int expected = 2;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
 	@Test public void pathingTest04(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(5, 0));
+		b.findPath();
 		int expected = 7;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
 	@Test public void pathingTest05(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(1, 6));
+		b.findPath();
 		int expected = 3;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
 	@Test public void pathingTest06(){
 		Board b = new Board(true);
-		b.findPath(b.getTile(2, 3));
+		b.findPath();
 		int expected = 2;
 		int actual = b.getPathSize();
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
@@ -81,8 +81,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,2,2);
-		b.findPath(b.getTile(2, 2));
-		boolean actual = b.movePlayer(p,2,3);//should return false
+		b.findPath();
+		boolean actual = b.movePlayer(2,3);//should return false
 		boolean expected = false;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
@@ -90,8 +90,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,2,2);
-		b.findPath(b.getTile(2, 2));
-		boolean actual = b.movePlayer(p,1,2);//should return true
+		b.findPath();
+		boolean actual = b.movePlayer(1,2);//should return true
 		boolean expected = true;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
@@ -99,8 +99,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,3,1);
-		b.findPath(b.getTile(3, 1));
-		boolean actual = b.movePlayer(p,1,2);//should return false
+		b.findPath();
+		boolean actual = b.movePlayer(1,2);//should return false
 		boolean expected = false;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
@@ -108,8 +108,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,3,1);
-		b.findPath(b.getTile(3, 1));
-		boolean actual = b.movePlayer(p,4,6);//should return true
+		b.findPath();
+		boolean actual = b.movePlayer(4,6);//should return true
 		boolean expected = true;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
@@ -117,8 +117,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,5,3);
-		b.findPath(b.getTile(5, 3));
-		boolean actual = b.movePlayer(p,1,2);//should return false
+		b.findPath();
+		boolean actual = b.movePlayer(1,2);//should return false
 		boolean expected = false;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}
@@ -126,8 +126,8 @@ public class ProjectTests {
 		Board b = new Board(true);
 		Player p = new Player(Color.BLUE);
 		b.addPlayer(p,5,3);
-		b.findPath(b.getTile(5,3));
-		boolean actual = b.movePlayer(p,5,0);//should return true
+		b.findPath();
+		boolean actual = b.movePlayer(5,0);//should return true
 		boolean expected = true;
 		assertTrue("Expected: "+expected+" Actually was: "+actual,actual==expected);
 	}

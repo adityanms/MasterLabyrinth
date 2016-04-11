@@ -232,7 +232,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		_playerButtons = new ArrayList<>();
 		for (int i = 0; i < _board.numberOfPlayers(); i++) {
-			_playerButtons.add(new JButton(_board.getPlayer(i).getPlayerName()));
+			Player p = _board.getPlayer(i);
+			JButton playerbutton = new JButton(p.getPlayerName());
+			playerbutton.setBackground(p.getColor());
+			_playerButtons.add(playerbutton);
+			
 			_dataPanel.add(_playerButtons.get(i));
 		}
 		
@@ -246,9 +250,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		moveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Player p = _board.getPlayer(0);
-				_board.findPath(_board.getTile(p.getX(), p.getY()));
-				_board.movePlayer(p, Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()));
+				_board.findPath();
+				if(_board.movePlayer(Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()))){
+					_board.switchPlayer();
+				};
 			}
 		});
 		movePanel.add(textx);
@@ -295,10 +300,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			pan.setBackground(Color.BLACK);
 		}
 
-		System.out.println("East " + _freeTile.getEast());
-		System.out.println("West " + _freeTile.getWest());
-		System.out.println("North " + _freeTile.getNorth());
-		System.out.println("South " + _freeTile.getSouth());
+		//System.out.println("East " + _freeTile.getEast());
+		//System.out.println("West " + _freeTile.getWest());
+		//System.out.println("North " + _freeTile.getNorth());
+		//System.out.println("South " + _freeTile.getSouth());
 		_freeTilePanel.repaint();
 		_dataPanel.repaint();
 		_window.repaint();

@@ -87,7 +87,7 @@ public class Tile {
 		_south = _east;
 		_east = temp;
 		
-		System.out.println("Rotated");//Testing to see if this works
+		//System.out.println("Rotated");//Testing to see if this works
 		
 	}
 
