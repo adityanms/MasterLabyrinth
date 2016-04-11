@@ -36,6 +36,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	private Tile _freeTile;
 	private JPanel _freeTilePanel;
 	private ArrayList<JButton> _playerButtons;
+	private JPanel _movePanel;
 
 	/**
 	 * Constructor.
@@ -236,17 +237,17 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			JButton playerbutton = new JButton(p.getPlayerName());
 			playerbutton.setBackground(p.getColor());
 			_playerButtons.add(playerbutton);
-			
+
 			_dataPanel.add(_playerButtons.get(i));
 		}
-		
-		
+
+
 		JTextField textx = new JTextField(5);
 		JTextField texty = new JTextField(5);
-		
-		JPanel movePanel = new JPanel();
+
+		JPanel _movePanel = new JPanel();
 		JButton moveButton = new JButton("Move");
-		
+
 		moveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,10 +257,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				};
 			}
 		});
-		movePanel.add(textx);
-		movePanel.add(texty);
-		movePanel.add(moveButton);
-		_dataPanel.add(movePanel);
+		_movePanel.add(textx);
+		_movePanel.add(texty);
+		_movePanel.add(moveButton);
+
+		_dataPanel.add(_movePanel);
 	}
 
 	private void redrawTile() {
@@ -389,20 +391,32 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 					if(t.getPlayerList().size()>=1){//tile has at least one player
 						pan = (JPanel) p.getComponent(0);
 						pan.setBackground(t.getPlayerList().get(0).getColor());
+						pan = (JPanel) p.getComponent(2);
+						pan.setBackground(Color.BLACK);
+						pan = (JPanel) p.getComponent(6);
+						pan.setBackground(Color.BLACK);
+						pan = (JPanel) p.getComponent(8);
+						pan.setBackground(Color.BLACK);
 					}
 					if(t.getPlayerList().size()>=2){//tile has at least two players on it
 						pan = (JPanel)p.getComponent(2);
 						pan.setBackground(t.getPlayerList().get(1).getColor());
+						pan = (JPanel) p.getComponent(6);
+						pan.setBackground(Color.BLACK);
+						pan = (JPanel) p.getComponent(8);
+						pan.setBackground(Color.BLACK);
 					}
 					if(t.getPlayerList().size()>=3){//tile has at least three players on it
 						pan = (JPanel)p.getComponent(6);
 						pan.setBackground(t.getPlayerList().get(2).getColor());
+						pan = (JPanel) p.getComponent(8);
+						pan.setBackground(Color.BLACK);
 					}
 					if(t.getPlayerList().size()==4){//tile has 4 players on it
 						pan = (JPanel)p.getComponent(8);
 						pan.setBackground(t.getPlayerList().get(3).getColor());
 					}
-					
+
 
 
 				}
@@ -415,7 +429,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 					pan.setBackground(Color.BLACK);
 					pan = (JPanel) p.getComponent(8);
 					pan.setBackground(Color.BLACK);
-					
+
 				}
 			}
 		}
@@ -425,7 +439,6 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	}
 
 	public JPanel getBoardPanel() {
-		// TODO Auto-generated method stub
 		return _boardPanel;
 	}
 

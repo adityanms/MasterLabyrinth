@@ -46,7 +46,7 @@ public class Board{
 	private HashSet<Tile> _path;	
 	private int _currentToken = 1;	//Token number that the players are trying to find
 	private int _currentPlayer = 0;
-	private int _currentStage = 1;
+	private int _currentStage = 0;
 
 	/**
 	 * Creates a board of Tiles.  As of now, it has a parameter to set the board to a dynamic state (for playing) and a 
@@ -699,6 +699,10 @@ public class Board{
 	
 	public int GetCurrentStage(){
 		return _currentStage;
+	}
+
+	public Player getCurrentPlayer() {
+		return getPlayer(_currentPlayer);
 	}
 
 }
