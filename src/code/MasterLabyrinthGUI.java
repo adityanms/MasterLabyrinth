@@ -436,6 +436,16 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		redrawTile();
 		Path pathsFile = new Path(this);
 		pathsFile.updatePaths();
+		
+		
+		for(int i=0; i<_playerButtons.size();i++){
+			if(_board.getCurrentPlayer()==_board.getPlayer(i)){
+				_playerButtons.get(i).setEnabled(true);	
+			}
+			else{
+				_playerButtons.get(i).setEnabled(false);
+			}	
+		}
 	}
 
 	public JPanel getBoardPanel() {
