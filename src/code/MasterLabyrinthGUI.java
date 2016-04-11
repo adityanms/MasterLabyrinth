@@ -37,6 +37,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	private JPanel _freeTilePanel;
 	private ArrayList<JButton> _playerButtons;
 	private JPanel _movePanel;
+	private JButton _moveButton;
+	private ArrayList<JButton> _shiftButtons;
 
 	/**
 	 * Constructor.
@@ -62,7 +64,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		initializeBoard();
 		initializeGamePanel();
 		initializeData();
-		update();
+
 
 		_window.setLayout(new GridLayout(1, 2));
 		_window.add(_gamePanel);
@@ -70,7 +72,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		_window.add(_dataPanel);
 		_window.pack();
 		_window.setVisible(true);
-
+		update();
 	}
 	/**
 	 * This method initializes the game panel. The game panel consists of the 
@@ -87,6 +89,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		JPanel bottom = new JPanel();
 		top.setLayout(new GridLayout(1,7));
 		bottom.setLayout(new GridLayout(1,7));
+		_shiftButtons = new ArrayList<>();
 		for(int i=0;i<7;i++){
 
 			if(i%2 != 0){
@@ -96,6 +99,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				bottom.add(bottomShift);
 				topShift.addActionListener(new ShiftButtonListener(_board,i,true,false));
 				bottomShift.addActionListener(new ShiftButtonListener(_board,i,false,false));
+				_shiftButtons.add(topShift);
+				_shiftButtons.add(bottomShift);
 			}
 
 			else{
@@ -116,6 +121,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 				left.add(leftShift);
 				rightShift.addActionListener(new ShiftButtonListener(_board,6-i,true,true));
 				leftShift.addActionListener(new ShiftButtonListener(_board,6-i,false,true));
+				_shiftButtons.add(rightShift);
+				_shiftButtons.add(leftShift);
 			}
 
 			else{
@@ -147,7 +154,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		for (int c = 0; c < Board.WIDTH; c++) {
 			for (int r = 0; r < Board.HEIGHT; r++) {
 				JPanel p = new JPanel();
-				p.setBorder(new LineBorder(Color.BLACK));
+				p.setBorder(new LineBorder(Color.WHITE));
 				p.setLayout(new GridLayout(3, 3));
 				p.setOpaque(true);
 				p.setFocusable(false);
@@ -246,9 +253,9 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		JTextField texty = new JTextField(5);
 
 		JPanel _movePanel = new JPanel();
-		JButton moveButton = new JButton("Move");
+		_moveButton = new JButton("Move");
 
-		moveButton.addActionListener(new ActionListener() {
+		_moveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_board.findPath();
@@ -257,7 +264,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		});
 		_movePanel.add(textx);
 		_movePanel.add(texty);
-		_movePanel.add(moveButton);
+		_movePanel.add(_moveButton);
 
 		_dataPanel.add(_movePanel);
 	}
@@ -316,7 +323,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 	@Override
 	public void update() {
-		System.out.println(""+_board.getPlayer(0).getX()+_board.getPlayer(0).getX());
+		//System.out.println(""+_board.getPlayer(0).getX()+_board.getPlayer(0).getX());
 		for (int c = 0; c < Board.WIDTH; c++) {
 			for (int r = 0; r < Board.HEIGHT; r++) {
 				JPanel p = (JPanel) _boardPanel.getComponent(r * Board.WIDTH + c);
@@ -439,7 +446,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		for(int i=0; i<_playerButtons.size();i++){
 			JButton jb = _playerButtons.get(i);
 			if(_board.getCurrentPlayer()==_board.getPlayer(i)){
-				
+
 				jb.setEnabled(true);
 				jb.setBackground(_board.getPlayer(i).getColor());
 				jb.setOpaque(true);
@@ -451,6 +458,26 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 			}	
 		}
+
+		//Only allows moving after shifting.  Enables move button if stage is 1, disables it if stage is 0.
+		if(_board.getCurrentStage() ==0){
+			_moveButton.setEnabled(false);
+		}
+		else{
+			_moveButton.setEnabled(true);
+		}
+
+		//Allows a player to only shift once per turn.
+		for(int i = 0;i<_shiftButtons.size();i++){
+			JButton jb = _shiftButtons.get(i);
+			if(_board.getCurrentStage()==0){
+				jb.setEnabled(true);
+			}
+			else{
+				jb.setEnabled(false);
+			}
+		}
+
 	}
 
 	public JPanel getBoardPanel() {

@@ -47,6 +47,7 @@ public class Board{
 	private int _currentToken = 1;	//Token number that the players are trying to find
 	private int _currentPlayer = 0;
 	private int _currentStage = 0;
+	
 
 	/**
 	 * Creates a board of Tiles.  As of now, it has a parameter to set the board to a dynamic state (for playing) and a 
@@ -526,8 +527,8 @@ public class Board{
 				_lastShiftType = true;
 				_lastShiftDirection = top;
 				_lastShiftPos = col;
-				gameStateChanged();
 				_currentStage = 1;
+				gameStateChanged();
 				return true;
 			}
 		}
@@ -698,10 +699,10 @@ public class Board{
 			_currentPlayer = 0;
 		}
 		
-		_currentStage = 1;
+		_currentStage = 0;
 	}
 	
-	public int GetCurrentStage(){
+	public int getCurrentStage(){
 		return _currentStage;
 	}
 
