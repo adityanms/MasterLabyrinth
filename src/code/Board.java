@@ -3,6 +3,7 @@ package code;
 import java.awt.Color;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -441,6 +442,29 @@ public class Board{
 			return true;
 		}
 		return false;
+	}
+	
+	public void movePlayer(Player p, KeyEvent e) {
+		//Player p = getPlayer(_currentPlayer);
+		int x = p.getX();
+		int y = p.getY();
+		System.out.println(e.getKeyChar());
+		if(e.getKeyChar() == 'w'){
+			movePlayer(x, y+1);
+			System.out.println("UP");
+		}
+		if(e.getKeyChar() == 's'){
+			movePlayer(x, y-1);
+			System.out.println("Down");
+		}
+		if(e.getKeyChar() == 'a'){
+			movePlayer(x-1, y);
+			System.out.println("Left");
+		}
+		if(e.getKeyChar() == 'd'){
+			movePlayer(x+1, y);
+			System.out.println("Right");
+		}
 	}
 	/**
 	 * Inserts the "free" tile into the designated column at either the top or bottom, and shifts the other values accordingly, 
