@@ -40,11 +40,11 @@ public class Path {
 				tileColor = componentTiles.getBackground();
 				
 				if(tileColor.equals(Color.black))
-				outputStream.append("B");
+					outputStream.append("B");
 				else
 					outputStream.append("O");
 			}
-			outputStream.println("/n");
+			outputStream.println();
 		}
 		outputStream.flush();
 		outputStream.close();
