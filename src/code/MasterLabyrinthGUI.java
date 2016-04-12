@@ -2,22 +2,17 @@ package code;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
-import java.util.Observable;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import code.Observer;
 
@@ -38,7 +33,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	private ArrayList<JButton> _playerButtons;
 	private JPanel _movePanel;
 	private JButton _moveButton;
+	private JButton _passButton;
 	private ArrayList<JButton> _shiftButtons;
+	private JPanel _freePanel;
+	private ArrayList<JTextField> _playerscores;
 
 	/**
 	 * Constructor.
@@ -60,6 +58,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 		_freeTile = _board.getFreeTile();
 		_dataPanel = new JPanel();
+		_dataPanel.setLayout(new GridLayout(3,1));
 		_freeTilePanel = new JPanel();
 		initializeBoard();
 		initializeGamePanel();
@@ -180,8 +179,31 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	 * Method to initilialize the data panel
 	 */
 	public void initializeData() {
+		_playerButtons = new ArrayList<>();
+		_playerscores = new ArrayList<>();
+		JPanel playerbuttonpanel = new JPanel();
+		playerbuttonpanel.setLayout(new GridLayout(2,4));
+		for (int i = 0; i < _board.numberOfPlayers(); i++) {
+			Player p = _board.getPlayer(i);
+			JButton playerbutton = new JButton(p.getPlayerName());
+			playerbutton.setBackground(p.getColor());
+			_playerButtons.add(playerbutton);
+			playerbuttonpanel.add(_playerButtons.get(i));
+		}
+		for (int i = 0; i < _board.numberOfPlayers(); i++) {
+			Player p = _board.getPlayer(i);
+			JTextField playerscore = new JTextField(4);
+			playerscore.setEnabled(false);
+			playerscore.setText("Score: "+p.getScore());
+			_playerscores.add(playerscore);
+			playerbuttonpanel.add(playerscore);
+		}
+
+		_dataPanel.add(playerbuttonpanel);
 		JButton rotateTile = new JButton("Rotate tile");
-		_dataPanel.add(rotateTile);
+		_freePanel = new JPanel();
+		_freePanel.setLayout(new FlowLayout());
+		_freePanel.add(rotateTile);
 		rotateTile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -190,7 +212,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			}
 		});
 
-		_dataPanel.add(_freeTilePanel);
+		_freePanel.add(_freeTilePanel);
+		_dataPanel.add(_freePanel);
 
 		_freeTilePanel.setLayout(new GridLayout(3, 3));
 		for (int i = 0; i < 3; i++) {// 3x3 grid on face of tile
@@ -238,35 +261,45 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			pan.setBackground(Color.BLACK);
 		}
 
-		_playerButtons = new ArrayList<>();
-		for (int i = 0; i < _board.numberOfPlayers(); i++) {
-			Player p = _board.getPlayer(i);
-			JButton playerbutton = new JButton(p.getPlayerName());
-			playerbutton.setBackground(p.getColor());
-			_playerButtons.add(playerbutton);
-
-			_dataPanel.add(_playerButtons.get(i));
-		}
-
 
 		JTextField textx = new JTextField(5);
 		JTextField texty = new JTextField(5);
 
-		JPanel _movePanel = new JPanel();
+		_movePanel = new JPanel();
 		_moveButton = new JButton("Move");
+		_passButton = new JButton("Pass");
 
 		_moveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_board.findPath();
-				_board.movePlayer(Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()));
+				try{
+					_board.movePlayer(Integer.valueOf(textx.getText()), Integer.valueOf(texty.getText()));
+				}
+				catch(NumberFormatException exception){
+					System.out.println("Please enter numbers only!");
+				}
+				catch(IndexOutOfBoundsException index){
+					System.out.println("Please enter valid indices (0-6)");
+				}
+			};
+		});
+
+		_passButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_board.switchPlayer();
 			};
 		});
 		_movePanel.add(textx);
 		_movePanel.add(texty);
 		_movePanel.add(_moveButton);
+		_movePanel.add(_passButton);
 
 		_dataPanel.add(_movePanel);
+
+
+
 	}
 
 	private void redrawTile() {
@@ -306,15 +339,6 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		} else {
 			pan.setBackground(Color.BLACK);
 		}
-
-		//System.out.println("East " + _freeTile.getEast());
-		//System.out.println("West " + _freeTile.getWest());
-		//System.out.println("North " + _freeTile.getNorth());
-		//System.out.println("South " + _freeTile.getSouth());
-		_freeTilePanel.repaint();
-		_dataPanel.repaint();
-		_window.repaint();
-
 	}
 
 	/**
@@ -453,6 +477,7 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			}
 			else{
 				jb.setEnabled(false);
+				jb.setBackground(_board.getPlayer(i).getColor());
 				Color c = jb.getBackground().darker().darker();
 				jb.setBackground(c);
 
@@ -462,9 +487,11 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 		//Only allows moving after shifting.  Enables move button if stage is 1, disables it if stage is 0.
 		if(_board.getCurrentStage() ==0){
 			_moveButton.setEnabled(false);
+			_passButton.setEnabled(false);
 		}
 		else{
 			_moveButton.setEnabled(true);
+			_passButton.setEnabled(true);
 		}
 
 		//Allows a player to only shift once per turn.
@@ -478,6 +505,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			}
 		}
 
+		for(int i=0;i<_playerscores.size();i++){
+			JTextField tf = _playerscores.get(i);
+			tf.setText("Score: "+_board.getPlayer(i).getScore());
+		}
 	}
 
 	public JPanel getBoardPanel() {

@@ -275,7 +275,7 @@ public class Board{
 		_path.add(getTile(p.getX(),p.getY()));
 		checkNeighbors(point.x,point.y);
 		_path.remove(getTile(p.getX(),p.getY()));
-		System.out.println("Path size is: "+_path.size()+" (Excluding current tile)");
+		//System.out.println("Path size is: "+_path.size()+" (Excluding current tile)");
 	}
 	/**
 	 * Helper method for findPath.  The logic involved in checking tiles that are adjacent to a given Tile.
@@ -438,7 +438,6 @@ public class Board{
 			}
 			
 			switchPlayer();
-			gameStateChanged();
 			return true;
 		}
 		return false;
@@ -700,6 +699,7 @@ public class Board{
 		}
 		
 		_currentStage = 0;
+		gameStateChanged();
 	}
 	
 	public int getCurrentStage(){
