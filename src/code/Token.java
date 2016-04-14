@@ -5,7 +5,6 @@ package code;
  * @author team112
  *
  */
-
 public class Token {
 	
 	private int _tokenNumber;

@@ -155,33 +155,61 @@ public class Tile {
 		return true;
 	}
 
-
+	/**
+	 * Checks for whether the tile in question has any players on it.
+	 * @return a boolean representing whether the tile's player list is empty or not.
+	 */
 	public boolean hasPlayer(){
 		if(_players.isEmpty()){
 			return false;
 		}
 		return true;
 	}
+	/**
+	 * Adds a player to the specified tile.
+	 * @param p the player to be added
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 */
 	public void setPlayer(Player p, int x, int y){
 		_players.add(p);
 		p.setX(x);
 		p.setY(y);
 	}
+	/**
+	 * Removes a player from the tile's player list.
+	 * @param p the player to be removed.
+	 */
 	public void removePlayer(Player p){
 		_players.remove(p);
 	}
 	
+	/**
+	 * Accessor for getting the player at index i from the tile's playerlist.
+	 * @param i the index of the player
+	 * @return the player
+	 */
 	public Player getPlayer(int i){
 		return _players.get(i);
 	}
+	/**
+	 * Accessor for the tile's player list.
+	 * @return the list of player's on this tile.
+	 */
 	public ArrayList<Player> getPlayerList(){
 		return _players;
 	}
 	
+	/**
+	 * Mutator for copying over the player list from one tile to another.  Used in shifting.
+	 * @param list the playerlist to add
+	 */
 	public void setPlayerList(ArrayList<Player> list){
 		 _players.addAll(list);
 	} 
-	
+	/**
+	 * Mutator to clear this tile's playerlist.  Used in shifting.
+	 */
 	public void clearPlayerList(){
 		 _players.clear();
 	} 

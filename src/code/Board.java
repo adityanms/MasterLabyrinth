@@ -159,11 +159,18 @@ public class Board{
 		_tileset.remove(0);
 
 	}
-
+	
+	/**
+	 * Sets the observer for the Board.
+	 * @param obs Observer that will monitor the Board.
+	 */
 	public void setObserver(Observer obs) {
 		_observer = obs;
 	}
-
+	
+	/**
+	 * Called whenever the state of the board has changed in order to update it visually.
+	 */
 	public void gameStateChanged() {
 		if (_observer != null) {
 			_observer.update();
@@ -404,13 +411,25 @@ public class Board{
 		return _freetile;
 	}
 
+	/**
+	 * Adds a player object to the board at a specified x,y.
+	 * @param p The player object to add to the Board
+	 * @param x	The player's starting x location.
+	 * @param y	The player's starting y location.
+	 */
 	public void addPlayer(Player p, int x, int y) {
 		p.setX(x);
 		p.setY(y);
 		Tile t = getTile(x, y);
 		t.setPlayer(p,x,y);
 	}
-
+	
+	/**
+	 * Attempts to move the current player to the tile with the x and y specified.
+	 * @param x	The x value of the tile to be moved to
+	 * @param y	The y value of the tile to be moved to
+	 * @return	A boolean indicating whether the move was successful.
+	 */
 	public boolean movePlayer(int x, int y) {
 		Player p = getPlayer(_currentPlayer);
 		if(_path.contains(getTile(x,y))){
@@ -444,6 +463,11 @@ public class Board{
 		return false;
 	}
 	
+	/**
+	 * Moves a player based on WASD keys pressed.  NOT FULLY IMPLEMENTED.
+	 * @param p the player to be moved.
+	 * @param e the key event generated
+	 */
 	public void movePlayer(Player p, KeyEvent e) {
 		//Player p = getPlayer(_currentPlayer);
 		int x = p.getX();
@@ -665,6 +689,10 @@ public class Board{
 		}
 		return false;
 	}
+	
+	/**
+	 * Rotates the free tile clockwise.  Updates the board visually.
+	 */
 	public void rotateFreeTile(){
 		_freetile.rotate();
 		gameStateChanged();
@@ -714,6 +742,9 @@ public class Board{
 		//		}
 	}
 	
+	/**
+	 * Gives control of the board to the next player, and changes the state back to the shift state. 
+	 */
 	public void switchPlayer(){
 		if(_currentPlayer < _player.size()-1){
 			_currentPlayer++;
@@ -726,10 +757,18 @@ public class Board{
 		gameStateChanged();
 	}
 	
+	/**
+	 * Accessor for the current stage of the player's turn.  0 = shift stage, 1 = move stage
+	 * @return
+	 */
 	public int getCurrentStage(){
 		return _currentStage;
 	}
 
+	/**
+	 * Accessor for the current player.
+	 * @return the current player
+	 */
 	public Player getCurrentPlayer() {
 		return getPlayer(_currentPlayer);
 	}

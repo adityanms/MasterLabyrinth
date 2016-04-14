@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * A player to be used in a game of master labyrinth.  Has a color, x-y coordinates, a name, and a list containing any tokens
+ * the player has collected.
+ * @author team112
+ *
+ */
 public class Player {
 	private Color _color;
 	private int _x, _y;
@@ -11,7 +17,7 @@ public class Player {
 	private ArrayList<Token> _playerTokens;	//Tokens that the player has obtained
 	
 	/**
-	 * Constructor
+	 * Constructor only used in testing.
 	 * @param color color of the player
 	 */
 	public Player(Color color){
@@ -84,17 +90,33 @@ public class Player {
 		return _color;
 	}
 	
+	/**
+	 * Adds a token from the board to the player's token inventory.
+	 * @param t the token to be added.
+	 */
 	public void addTokenSet(Token t){
 		_playerTokens.add(t);
 	}
 	
+	/**
+	 * Accessor for the player's inventory of tokens collected.
+	 * @return the player's list of tokens.
+	 */
 	public ArrayList<Token> getTokenSet(){
 		return _playerTokens;
 	}
+	/**
+	 * Sets the player's color.
+	 * @param c the color to be set
+	 */
 	public void setColor(Color c){
 		_color = c;
 	}
 	
+	/**
+	 * Computes the players score based on tokens they have collected.
+	 * @return the player's score as an int value
+	 */
 	public int getScore(){
 		
 		int score = 0;

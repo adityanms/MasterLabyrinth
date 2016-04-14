@@ -197,7 +197,8 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	}
 
 	/**
-	 * Method to initilialize the data panel
+	 * Method to initilialize the data panel.
+	 * The data panel contains information related to player movement, player score, and the state of the free tile.
 	 */
 	public void initializeData() {
 		_playerButtons = new ArrayList<>();
@@ -322,7 +323,9 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 
 
 	}
-
+	/**
+	 * Redraws the free tile on the data panel.
+	 */
 	private void redrawTile() {
 		JPanel tile = _freeTilePanel;
 		_freeTile = _board.getFreeTile();
@@ -363,9 +366,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 	}
 
 	/**
-	 * The Update method is required as this implements the Observer interface
+	 * The Update method is required as this implements the Observer interface.
+	 * Updates the visual representation of the Board.
+	 * Will be split up into helper methods to keep it tidy.
 	 */
-
 	@Override
 	public void update() {
 		//System.out.println(""+_board.getPlayer(0).getX()+_board.getPlayer(0).getX());
@@ -535,7 +539,10 @@ public class MasterLabyrinthGUI implements Runnable, Observer {
 			tf.setText("Score: "+_board.getPlayer(i).getScore());
 		}
 	}
-
+	/**
+	 * Accessor for the Board Panel.
+	 * @return the JPanel representing the 7x7 board.
+	 */
 	public JPanel getBoardPanel() {
 		return _boardPanel;
 	}
